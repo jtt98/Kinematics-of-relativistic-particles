@@ -1,0 +1,1595 @@
+\documentclass[11pt]{book}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,margin=3cm]{geometry}
+\usepackage{bbm}
+\usepackage[colorlinks=true,urlcolor=blue,linkcolor=blue,citecolor=blue]{hyperref}
+\usepackage{soul}
+\usepackage{array}
+\usepackage{marvosym}
+\usepackage{epsfig}
+\usepackage{graphics}
+\usepackage{amsfonts}
+\usepackage{xspace}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{xtab}
+\usepackage{latexsym}
+\usepackage{fancyhdr}
+\usepackage[sc]{mathpazo}
+
+%%Para reducir margenes
+%\setlength{\textwidth}{17cm}       % el defecto es 14cm
+%\setlength{\textheight}{24.40cm}       % el defecto es 14cm
+%\setlength{\oddsidemargin}{0.16cm}   % elimina 1em de los m\'{a}rgenes laterales
+%\setlength{\evensidemargin}{0.16cm}  % elimina 1em de los m\'{a}rgenes laterales
+%\setlength{\topmargin}{-1.2cm}     % elimina espacio del margen superior
+
+% Some Mathematics-related packages
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+
+%Type of QED symbol
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%\numberwithin{equation}{section}
+\allowdisplaybreaks[2]
+
+\DeclareMathOperator{\deter}{determinante}
+\DeclareMathOperator{\dist}{dist}
+
+% language
+\usepackage[english]{babel}
+
+% Grupos tipo teorema
+\newtheorem{defi}{Definition}[chapter]
+\newtheorem{theor}[defi]{Theorem}
+\newtheorem{pro}[defi]{Proposition}
+\newtheorem{cor}[defi]{Corolary}
+\newtheorem{lem}[defi]{Lemma}
+\newtheorem{rem}[defi]{Remark}
+\newtheorem{ex}[defi]{Example}
+
+
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\C{\mathbb C}
+\def\S{\mathbb S}
+\def\L{\mathbb L}
+\def\H{\mathbb H}
+\def\K{\mathbb K}
+\def\X{\mathbb X}
+\def\Y{\mathbb Y}
+\def\A{\mathbb A}
+\def\J{\mathbb J}
+\def\I{\mathbb I}
+\def\T{\mathcal T}
+\def\t{\mathfrak T}
+\def\a{\mathcal A}
+\def\f{\mathcal F}
+\def\F{\mathfrak F}
+\def\x{\mathfrak X}
+
+% Espaciado en itemize y enumerate
+\let\olditemize\itemize
+\def\itemize{\olditemize\itemsep=0pt }
+\let\oldenumerate\enumerate
+\def\enumerate{\oldenumerate\itemsep=0pt }
+
+% Mis datos %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\miNombre}{Jose Torrente Teruel}
+\newcommand{\miCurso}{2020-2021}
+
+\begin{document}
+	
+	
+\title{\Huge Kinematics of relativistic particles: \\
+existence and extendibility \\ of the trajectories}
+
+
+\vfill
+
+\author{\\[2cm] Jose Torrente Teruel \\ Department of Geometry and
+	Topology\\ University of Granada
+	\\E-mail: \ttfamily{josett@correo.ugr.es}\\[30mm]
+	Supervisor: Alfonso Romero Sarabia \\[20mm]}
+
+\date{September 2021}
+
+
+\maketitle
+
+
+
+\markboth{}{}
+
+
+\thispagestyle{empty}
+
+\newpage
+	
+	% Indice %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\newpage
+	\thispagestyle{empty}
+	\tableofcontents
+	\thispagestyle{empty}
+	
+	% Texto %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\newpage
+	
+	\pagestyle{empty}
+	\fancyhead[RO,LE]{\leftmark}
+	\fancyhead[LO,RE]{\thepage}
+	\fancyfoot{}
+
+
+\chapter*{Introduction}
+\pagenumbering{arabic}
+\addcontentsline{toc}{chapter}{Introduction} 
+\markboth{INTRODUCTION}{INTRODUCTION}
+%Al igual que la “mathematical framework” de Mecánica clásica es una rama de la Geometría Simpléctica, las matemáticas de Relatividad General se pueden considerar como una rama de la Geometría Lorentziana. A lo largo de este trabajo, estudiaremos algunos problemas asociados con la Cinemática Relativista, en concreto el movimiento uniformemente acelerado (UAM), el movimiento de dirección constante (UDM) y el movimiento circular uniforme (UCM). Nuestro objetivo será el de obtener ecuaciones diferenciales para cada uno de ellos, atendiendo a la completitud de las soluciones, y estudiar caracterizaciones geométricas en términos de las correspondientes ecuaciones de Frenet.
+
+Just as the mathematical framework of Classical Mechanics is a branch of Symplectic Geometry, the mathematics of General Relativity can be considered as a branch of Lorentzian Geometry. The groundbreaking discovery of Relativity at the beginning of the 20th century made it possible, and it induced the treatment of space and time on the same footing. Throughout this work, we will study some problems associated with Relativistic Kinematics, specifically uniformly accelerated motion (UAM), uniform direction motion (UDM), and uniform circular motion (UCM). Our objective will be to give and discuss these notions, obtaining several geometric characterizations in terms of the corresponding Frenet equations, to obtain the corresponding differential equations and to state the associated initial value problems, and to study the completeness of the inextensible solutions in the case of the first aforementioned motion. In the development of this work we have made use extensively of \cite{UAM}, \cite{UDM} and \cite{UCM}. 
+
+%Desde un punto de vista naíf, una aceleración uniforme parece imposible en Relatividad, ya que la velocidad de la luz fija una cota superior para la velocidad que puede alcanzar una partícula. Sin embargo, en Relatividad General la noción de observador inercial no tiene sentido, y en general no se puede definir una familia de observadores inerciales que midan la aceleración de una partícula. Para ello, se suele utilizar la noción de acelerómetro. Esto no es más que la construcción de una esfera unida a un pequeño objeto esférico en su centro por medio de cuerdas elásticas. Un observador que posea tal objeto, podrá comprobar que está en caída libre si la bola permanece en el centro de la esfera sin moverse. De esta forma, una aceleración uniforme podrá ser detectada si dicha bola posee un desplazamiento constante del centro. Esta idea intuitiva es la que generalizamos rigurosamente en Relatividad desde el punto de vista matemático, ya que no depende de si el espacio es relativista o no.
+
+From a naive point of view, a uniformly accelerated motion seems to be impossible in Relativity since the speed of any particle (with positive mass) is bounded by the light speed in vacuum. This intuition comes from the fact that in Classical Mechanics a particle is said to be accelerated when an inertial observer measures non-vanishing relative acceleration. However, as everyone knows, the notion of an inertial observer has no sense in General Relativity. The acceleration of a particle may be detected by using an ``accelerometer''. This mechanism may be thought of as a sphere attached to a small spherical object at its center by means of elastic radii. If an observer carrying such an accelerometer is freely falling, then it will notice that the ball remains just at the center. Thus, a uniform acceleration will be detected if the ball has a constant displacement from the center. This intuitive idea does not depend on whether the setting is relativistic or not, and it can be generalized to Relativity from a mathematical viewpoint.
+
+%La definición de UAM ha sido extensamente tratada en los últimos 50 años. En este sentido, Rindler realizó un trabajo pionero \cite{LCP}, introduciendo lo que el llamó movimiento hiperbólico, en base a la relación entre movimiento uniformemente acelerado y círculos Lorentzianos en el espaciotiempo de Lorentz-Minkowski. No fue hasta 2015 cuando se desarrolló el concepto para la teoría general \cite{UAM}, \cite{KGR}, debido quizás a las profundas herramientas y conceptos matemáticos necesarios. Este "topic" sigue siendo de gran interés para la actual comunidad científica \cite{Friedman1}, \cite{Friedman2}, \cite{SolutionsUAM}. 
+
+The notion of UAM in Relativity has been extensively discussed in the last 50 years. In this sense, Rindler carried out a pioneering work \cite{LCP}, introducing what he called hyperbolic motion. His work was based on the relationship between uniformly accelerated motion and Lorentzian circles in Lorentz-Minkowski spacetime. It was not until 2015 that the notion of UAM was systematically introduced in the general theory \cite{UAM}, \cite{KGR}. Perhaps this fact is due to the deep mathematical tools required,  all of them in the realm of modern Lorentzian Geometry. This topic continues to be of great interest to the current scientific community, as can be seen in \cite{Friedman1}, \cite{Friedman2} and \cite{SolutionsUAM}.
+
+%Existen muchas (several) situaciones físicas donde aparecen UAM. Por ejemplo, si consideramos una partícula cargada $(\gamma,m,q)$, donde $\gamma$ es la curva que caracteriza la trayectoria de la partícula, $m$ es su masa y $q$ es su carga, su dinámica es descrita por la conocida como ecuación de Fuerzas de Lorentz, 
+%\[
+%m\frac{D\gamma\,'}{du}=q\tilde{F}(\gamma\,'),
+%\]
+%donde $\tilde{F}$ es el tensor de tipo (1,1) metricamente equivalente a la 2-forma $F$. Este $\tilde{F}$ se denomina el campo electromagnético relativo a $\gamma$ \cite[Section 3.4]{SW}. Una partícula cargada seguirá un UAM en el caso en que $\tilde{F}$ sea percibido como constante por $\gamma$, noción que será descrita mediante el transporte paralelo de Fermi-Walker (Proposition \ref{existencia and unicidad conexion FM}).
+
+There are several physical situations where naturally UAM appears. For example, if we consider a charged particle $(\gamma,m,q)$, where $\gamma$ is the curve that characterizes the trajectory of the particle, $m$ is the mass and $q$ the charge, its dynamics are described by the so-called Lorentz force law \cite[Definition 3.8.1]{SW},
+\[
+m\frac{D\gamma\,'}{du}=q\,\widetilde{F}(\gamma\,'),
+\]
+where $\widetilde{F}$ is the $(1,1)$-tensor metrically equivalent to the $2$-form $F$, the electromagnetic field on $M$. Note that $\widetilde{F}$ contains the same physical information as $F$. Moreover, $\widetilde{F}(\gamma\,')$ is the electric field measured by $\gamma$, \cite[Section 3.4]{SW}. Then, a charged particle obeys a UAM if the relative electric field  $\widetilde{F}(\gamma\,')$ is perceived as constant by $\gamma$.
+
+%Veremos que los observadores que siguen un UAM se pueden caracterizar como circunferencias lorentzianas en un espaciotiempo general (Subsection 3.3.1). Por otro lado, éstos pueden ser descritos como curvas integrales de un cierto campo de vectores definido sobre el llamado Fibrado de Stiefel (Section 3.4). Con ello buscaremos hipótesis geométricas que impliquen que los observadores que siguen un UAM no desaparecen en un tiempo propio finito (son completos). 
+
+The main goal of this memory is fulfilled in Chapter \ref{Chapter3}. After introducing the Fermi-Walker covariant derivative of an observer in an arbitrary spacetime (Proposition \ref{existencia and unicidad conexion FM}) and, consequently, the associated Fermi-Walker parallel transport (Definition \ref{FW parallel transport}), the notion of an observer that obeys a UAM, i.e., an observer that perceives its $4$-acceleration constant, is analysed in a general spacetime. Then, such an observer has been geometrically characterized as a Lorentzian circle (Subsection 3.3.1). Each trajectory of a uniformly accelerated observer can be contemplated as the projection on the spacetime of an integral curve of certain vector field defined on a Stiefel fiber bundle over the spacetime (Section 3.4). Using this vector field as a tool as shown in \cite[Section 4]{UAM}, where the technique introduced in Section 1.6 is extended, we find assumptions to ensure that an inextensible UAM observer does not disappear in a finite proper time (Theorem \ref{completitud}) \cite[Theorem 4.5]{UAM}, i.e., we obtain the absence of (timelike) singularities for observers obeying a UAM under suitable assumptions. 
+
+%Por otro lado, si la bola del centro del acelerómetro se mueve a lo largo de un radio, entonces un observador puede afirmar que sigue un movimiento rectilíneo (o de dirección constante). Esto nos posibilita la definición del UDM en Relatividad general, como observadores que presentan una aceleración propia que no cambia su dirección. La clase de observadores que siguen un UDM es claramente más amplia que la de los UAM. 
+%Introduciremos la noción de movimiento rectilíneo a trozos (Definition \ref{piece-wise}). Un observador seguirá este movimiento si su dirección cambia sólo cuando su acelerómetro tiene la bola en su centro, es decir, marca cero. Éstos vendrán caracterizados por una ecuación diferencial ordinaria (\ref{UDM}) que generaliza al UDM. 
+
+Coming back to the accelerometer, if the the ball moves along a radius, then the observer thinks that its motion obeys a rectilinear (or uniform direction) trajectory. This idea enables us to say, following \cite{UDM}, that an observer obeys a UDM in General Relativity if its proper acceleration does not change its direction (Definition \ref{UDM_def}). Clearly, the class of observers obeying a UDM is much bigger than the corresponding one to UAM. In addition, we will introduce the notion of piecewise rectilinear motion (Definition \ref{piece-wise}) as follows: a piecewise uniform direction observer is just an observer whose direction may change when its accelerometer has the ball at its centre, that is, it marks zero. Every piecewise UDM will be characterized by an ordinary differential equation (\ref{UDM}) that generalizes the corresponding one to UDM.
+
+%Finalmente, trataremos el UCM, el cual tiene un reconocido interés físico y tecnológico, ya que se corresponde con las órbitas de algunos satélites, planetas o estrellas (véase \cite{Geisler}). El UCM ha sido estudiado en Relatividad Especial \cite{thomas precession}, pero la extensión a Relatividad General no llega hasta 2016 \cite{UCM}. El usual "aproach" consiste en fijar una familia de observadores inercial fijando un centro, los cuales miden si el observador describe un movimiento circular y si posee velocidad angular constante. Sin embargo, esto sólo es posible en ciertos espaciotiempos tales como el de Schwarzschild. 
+
+We end Chapter \ref{Chapter3} with the study of UCM. This motion has a recognized physical and technological interest since it corresponds to some satellite, planet or star orbits (see \cite{Geisler}). Intuitively, an observer obeys a uniform circular motion if it detects that the ball of its accelerometer obeys a uniform plane rotation. UCM has been widely studied in Special Relativity \cite{thomas precession}. In concrete spacetimes as  Schwarzschild spacetime, UCM has been also studied making use of a distinguished family of observers that is used to state the notion of circular motion and whether it has constant angular velocity. Clearly, this approach is not possible for any arbitrary spacetime. To get a rigorous and general definition, we must first introduce what it means for an observer to describe a plane motion (Definition \ref{plane motion}). Thus, we will say in brief that an observer obeys a UCM if its motion is plane and the modulus of the acceleration and of its change remain constant and have a certain relationship (Definition \ref{UCM definition}). The notion of UCM was introduced in 2016 \cite{UCM}, \cite{KGR}, it is intrinsic, as well the notions of UAM and UDM, for the observer, i.e., it involves only physical observable quantities. This approach allows to give a geometric characterization of an observer that obeys a UCM as a Lorentzian helix in a spacetime, and this result will be used to characterize such an observer as a solution of certain fourth-order differential equation (\ref{UCM Frenet 2}).
+\hyphenation{ge-ne-ra-li-zed}
+
+%Al igual que para el UAM y el UDM, la definición que damos del UCM es intrínseca del observador. Ésta coincide con la noción estándar de los casos citados anteriormente. Intuitivamente, si un observador está en movimiento circular uniforme y posee un acelerómetro, detectará que la bola describe una rotación uniforme plana. Para conseguir una definición rigurosa desde el punto de vista matemático, debemos primero describir lo que significa que el observador permanezca siempre en el mismo plano, lo cual se realiza a partir de la conexión de Fermi-Walker. Por último, diremos que un observador sigue un UCM si se mueve en un plano observable y el módulo de la aceleración y del cambio de ésta se mantienen constantes (Definition \ref{UCM}). Esto posibilita la identificación geométrica de los observadores qe siguen un UCM como hélices lorentzianas en un espaciotiempo general, y este resultado se puede utilizar para caracterizar a dichos observadores como soluciones de una ecuación diferencial de cuarto orden (\ref{UCM Frenet 2}).
+
+%The content of this work has the next structure:
+%
+%The first chapter begins introducing the classical notions in Kinematics and building up the linear Lorentzian Geometry. By this, we will deal with Kinematics in Special Relativity, under the perspective of \cite{UAM}, \cite{UDM} and \cite{UCM}.
+%
+%The second and third chapters are dedicated to the study of Differential Geometry and later Lorentzian Geometry, whose basic tools will be needed in the analysis of the last chapter. Fundamentally, we introduce the notions of time orientation in a Lorentzian manifold and spacetime.
+%
+%In the fourth chapter we study the general UAM in detail, showing that it could be geometrically characterized as a so-called Lorentzian circle in a general spacetime in Section \ref{UAM in General Relativity}. As we announced before, we study the completeness of the trajectories of UAM, searching conditions for the completeness of those. Then we deal with the UDM and UCM from the same perspective of UAM in Section \ref{Other motions}. We will emphasize that the observers obeying UDM and UCM, as same as UAM, arise from solutions of particular differential equations over the spacetime.
+
+Finally, the necessary tools of (differential) Lorentzian Geometry will be explained in Chapter \ref{Chapter2}. In particular, we have stated in detail the notion of time orientation of a Lorentzian manifold and we have discussed when a Lorentzian manifold is time orientable. Indeed, the notion of time oriented Lorentzian manifold is essential to arrive to the definition of spacetime. Moreover, to finish this chapter we have introduced the techniques developed in \cite{RS} that motivate the proof of completeness of the different motions and prove  the (geodesic) completeness of a compact Lorentzian manifold under certain conditions.
+
+\pagestyle{fancy}
+\fancyhead[RO,LE]{\leftmark}
+\fancyhead[LO,RE]{\thepage}
+\fancyfoot{}
+
+
+\chapter{Semi-Riemannian Manifolds}\label{Chapter2}
+This chapter is devoted to introducing the necessary mathematical tools to work in General Relativity. In particular, we will define the fundamental notions of spacetime and geodesics. It is based fundamentally on \cite{DM}, \cite{SRG} and \cite{SEC}. 
+
+First of all, we define the notion of integral curve, which will be central in the proof of the completeness results that we want to obtain.
+\begin{defi}[Integral curves]
+	Let $M$ be a manifold and let $X\in \x(M)$. An integral curve of $X$ is a curve $\gamma:I\to M$ which satisfies
+	\begin{equation}
+		\gamma{\,'}(t)=X_{\gamma(t)}
+	\end{equation}
+	for every $t\in I$, i.e., the vector field $X$ points out the velocity of $\gamma$ at every $t\in I$.
+\end{defi}
+
+\begin{lem}
+	Let $M$ be a manifold and let $X\in \x(M)$. 
+	For every $p_0\in M$ there exists a unique maximal (i.e., inextensible) integral curve $\gamma:I\to M$ of $X$ such that $\gamma(t_0)=p_0$. 
+\end{lem}
+\begin{proof}
+	Once a coordinate system around $p_0$ is chosen, the definition of integral curve is expressed as a system of linear differential equations in the components of $\gamma$. Then, imposing the initial condition, we have a unique solution in the corresponding neighbourhood. The maximal solution is obtained by a standard process of continuation of local solutions.
+\end{proof}
+
+The following result is a useful tool for dealing with extendibility of integral curves.
+\begin{lem}\cite[Lemma 1.56]{SRG}\label{curv ext}
+	Let $M$ be a manifold and let $X\in \x(M)$. An integral curve $\gamma:[0,b[ \to M$ of $X$ can be extended to $b$ (as an integral curve) if, and only if, there exists a sequence $\{t_n\}\nearrow b$ such that $\{\gamma(t_n)\}$ is convergent.
+\end{lem}
+
+\section{Semi-Riemannian metrics}
+\begin{defi}
+	Let $M$ be a manifold with $\text{dim}M=n(\ge 2)$. A semi-Riemannian metric on $M$ is a symmetric  $(0,2)$ tensor field
+	\[
+	g:M\to \t_{0,2}(M),
+	\]
+	such that, for every $p\in M$, we have that
+	\[
+	g_p : T_pM \times T_pM \to \R
+	\]
+	is a non-degenerated symmetric bilinear form with index independent of $p$. If $g$ is a semi-Riemannian metric on $M$, the pair $(M,g)$ is called a semi-Riemannian manifold (usually denoted by $M$ if $g$ is understood).
+	In the case of index $0$, $M$ is called a Riemannian manifold, and in the case of index $1$, $M$ is called a Lorentzian manifold.
+\end{defi}
+
+Let $(U,x_1,...,x_n)$ be a coordinate system in $M$. Using the induced basis in $\t_{0,2}(M)$, we can write
+\[
+g=\sum_{i,j=1}^{n} g_{ij} dx_i \otimes dx_j
+\]
+on $U$, where 
+\[
+g_{ij}=g\left(\frac{\partial}{\partial x_i},\frac{\partial}{\partial x_j}\right)\in \F(U).
+\]
+\section{Levi-Civita connection}
+The goal of this section is, given two vector fields $X,Y$, to introduce a new vector field $\nabla_X Y$ that represent the change rate of Y with respect to the direction of $X_p$, at every point $p\in M$. 
+\begin{defi}\label{conexion LC}
+	An affine connection on a manifold $M$ is a map
+	\[
+	\nabla: \x(M) \times \x(M) \to \x(M)
+	\]
+	\[
+	(X,Y)\longmapsto \nabla(X,Y):=\nabla_X Y,
+	\]
+	that satisfies the following conditions
+	\begin{enumerate}
+		\item $\nabla_{fX+hY} Z=f\nabla_X Z + h\nabla_Y Z$,
+		\item $\nabla_X (Y+Z)=\nabla_X Y +\nabla_X Z$,
+		\item $\nabla_X (fY)=f\nabla_X Y + X(f) Y$,
+	\end{enumerate}
+	for every $X,Y,Z\in \x(M)$ and $f,h\in \F(M)$. We call $\nabla_X Y$ the covariant derivative of $Y$ with respect to $X$.
+\end{defi}
+
+Note that the two variables of $\nabla$ have not the same geometric meaning. At the first one, the connection is $\F(M)$-linear; in the second one it is $\R$-linear and it satisfies a Leibnizian property. Thus, a connection does not have a tensorial character. Moreover, the notion of affine connection has a local nature. 
+If $p\in M$ and $v\in T_pM$, we write $\nabla_{v} Y:=\left(\nabla_{X} Y\right)_p$, where $X\in \x(M)$ is such that $X_p=v$. Of course $\nabla_{v} Y$ is well defined because if $X,Z\in\x(M)$ satisfy $X_p=Z_p=v$, then $\left(\nabla_{X} Y\right)_p=\left(\nabla_{Z} Y\right)_p$.
+
+\begin{defi}[Christoffel symbols]
+	Let $(U,x_1,...,x_n)$ be a coordinate system in a semi-Riemannian manifold $M$. The Christoffel symbols for this coordinate system are the functions $\Gamma_{ij}^k$ on $U$ such that
+	\[
+	\nabla_{\frac{\partial}{\partial x_i}}\frac{\partial}{\partial x_j}=\sum_{k=1}^n \Gamma_{ij}^k \frac{\partial}{\partial x_k},
+	\]
+	i.e., $\Gamma_{ij}^k(p)$, for $p\in U$, is the k-th component of $\Big(\nabla_{\frac{\partial}{\partial x_i}}\dfrac{\partial}{\partial x_j}\Big)_p$ in the basis $B=\left(\dfrac{\partial}{\partial x_1}\Big|_p,...,\dfrac{\partial}{\partial x_n}\Big|_p\right)$ of $T_pM$. Thus, $\Gamma_{ij}^k=dx_k\Big(\nabla_{\frac{\partial}{\partial x_i}}\dfrac{\partial}{\partial x_j}\Big)\in \F(U)$. Note that $\Gamma_{ij}^k=\Gamma_{ji}^k$, since $\left[\dfrac{\partial}{\partial x_i},\dfrac{\partial}{\partial x_j}\right]=0$. 
+\end{defi}
+
+
+\begin{rem}
+	{\rm Let $(U,x_1,...,x_n)$ be a coordinate system with $p\in U$. Let $X,Y\in \x(M)$. We know that $X$ and $Y$ are locally expressed by
+		\[
+		X=\sum_i X^i \partial_i ,\quad Y=\sum_i Y^i \partial_i,
+		\]
+		where we put $\partial_i:=\dfrac{\partial}{\partial x_i}$ and $X^i=dx_i(X), Y^j=dx_j(Y)$. Then, applying the properties of Definition \ref{conexion LC}, we have on $U$
+		\[
+		\nabla_X Y=\sum_i X^i \nabla_{\partial_i}(\sum_j Y^j \partial_j)=\sum_{i,j} X^i(\partial_i Y^j)\partial_j + \sum_{i,j} X^iY^j \nabla_{\partial_i}\partial_j\,.
+		\]
+		Now, from definition of Christoffel symbols, we obtain on $U$
+		\begin{equation}
+			\nabla_X Y=\sum_k \left( X(Y^k) + \sum_{ij} X^i Y^j \Gamma_{ij}^k \right) \partial_k 
+		\end{equation}
+		
+	}
+\end{rem}
+
+\begin{defi}[Symmetry and compatibility]
+	An affine connection $\nabla$ on a manifold $M$ is called symmetric if
+	\[
+	\nabla_X Y-\nabla_Y X=[X,Y]
+	\]
+	for every $X,Y\in \x(M)$. Now, if $(M,g)$ is a semi-Riemannian manifold, an affine connection $\nabla$ on $M$ is called compatible with $g$ if
+	\[
+	Xg(Y,Z)=g(\nabla_X Y,Z)+g(Y,\nabla_X Z)
+	\]
+	for every $X,Y,Z\in \x(M)$.
+\end{defi}
+
+The following result is sometimes called the ``miracle'' of semi-Riemannian geometry.
+\begin{theor}
+	Given a semi-Riemannian manifold $(M,g)$, there exists a unique affine connection $\nabla$ symmetric and compatible with $g$, characterised by Koszul formula:
+	\[
+	g(\nabla_X Y,Z)=\frac{1}{2} \big[Xg(Y,Z) + Yg(Z,X) -Zg(X,Y) +
+	\]
+	\[
+	\hspace*{26mm}	+ g([X,Y],Z) + g([Z,X],Y) - g([Y,Z],X)\big],
+	\]
+	for every $X,Y,Z\in \x(M)$. This affine connection is called the Levi-Civita connection of $(M,g)$.
+\end{theor}
+\begin{proof}
+	Suppose that $\nabla$ is a symmetric and compatible affine connection on $M$. Then, it suffices to apply the compatibility condition to the first three terms in Koszul formula and the symmetry condition to the last three terms, to obtain $g(\nabla_X Y,Z)$ for all $X,Y,Z\in \x(M)$. Since g is non-degenerated, this gives $\nabla_X Y$ for any $X,Y\in \x(M)$, and then $\nabla$ is unique.
+	
+	To prove the existence, given $X,Y\in \x(M)$, define
+	\[
+	F(X,Y,-):\x(M) \longrightarrow \R,
+	\]
+	\[
+	Z \longmapsto F(X,Y,Z):=Xg(Y,Z) + Yg(Z,X) -Zg(X,Y) +
+	\]
+	\[
+	+ g([X,Y],Z) + g([Z,X],Y) + g([Y,Z],X).
+	\]
+	This function if $\F(M)$-linear. Then, there exists a unique vector field, named $\nabla_X Y$, such that 
+	\[
+	g(\nabla_X Y,Z)=\frac{1}{2}\,F(X,Y,Z),\quad \forall Z\in \x(M).
+	\] 
+	This way, Koszul formula is satisfied and it is easy to check the properties of a symmetric and compatible connection.
+\end{proof}
+
+\begin{rem}
+	{\rm 
+		Applying Koszul formula to coordinate fields, it turns out
+		\begin{equation}
+			\Gamma_{ij}^k = \frac{1}{2} \sum_m g^{mk} (\partial_i g_{mj} + \partial_j g_{im} - \partial_m g_{ij})
+		\end{equation}
+		where $(g^{ij})_{1\le i,j \le n}=(g_{ij})_{1 \le i,j \le n}^{-1}$.
+		Besides, this formula could be used as a local definition of the Christoffel symbols and hence of the Levi-Civita connection of $g$.
+	} 
+\end{rem}
+
+\begin{defi}[Affine connection along a smooth map]\label{conexion along curva}
+	Let $N$ and $M$ be two manifolds and let $\phi:N\to M$ be a smooth map. A connection along $\phi$ is a map
+	\[
+	\nabla:\x(N) \times \x(\phi)\longrightarrow \x(\phi)
+	\]
+	\[
+	(X,A)\longmapsto \nabla_X A,
+	\]
+	such that
+	\begin{enumerate}
+		\item $\nabla_{X+Y} A=\nabla_X A + \nabla_Y A$
+		
+		$\nabla_{fX} A=f\nabla_X A$, for every $X,Y\in \x(N)$, $f\in \F(N)$ and $A\in \x(\phi)$.
+		\item $\nabla_X (A+B)=\nabla_X A + \nabla_X B$
+		
+		$\nabla_X (fA)=X(f) A + f\nabla_X A$, for every $X\in \x(N)$, $f\in \F(N)$ and $A,B\in \x(\phi)$.
+	\end{enumerate}
+\end{defi}
+
+Clearly, if $X\in \x(M)$ then it follows $X\circ \phi\in \x(\phi)$.
+
+\begin{pro}
+	Let $N$ and $M$ be manifolds and let $\phi:N\to M$ be a smooth map. If $\overline{\nabla}$ is an affine connection on $M$, there exists a unique connection $\nabla$ along $\phi$ such that
+	\begin{equation}\label{conexion curva}
+		\nabla_v(A\circ \phi)=\overline{\nabla}_{d\phi_p(v)}A,\hspace{1mm} \forall A\in \x(M),\hspace{1mm} \forall v\in T_pN\,.
+	\end{equation}
+	The connection $\nabla$ is called the induced connection by $\overline{\nabla}$ along $\phi$. 
+\end{pro}
+\begin{proof}
+	If we define $\nabla$ in this way, then it is easy to prove that it is a connection along $\phi$ and it is unique satisfying (\ref{conexion curva}).
+\end{proof}
+
+\section{Parallel transport}
+Now we have a well defined ``change rate'' of a vector field along any smooth map. If we take this map as a curve, then we can measure the change along its trajectory using the following 
+\begin{defi}[Covariant derivative]\label{derivada covariante}
+	Let $M$ be a manifold and let $\nabla$ be an affine connection on $M$. Given a curve $\gamma:I\to M$, there exists a unique map  $X\in \x(\gamma) \mapsto \dfrac{DX}{dt}\in \x(\gamma)$, called the (induced) covariant derivative along $\gamma$, such that (\cite{SRG}):
+	\begin{enumerate}
+		\item $\dfrac{D(aX+bY)}{dt}=a \dfrac{DX}{dt}+ b \dfrac{DY}{dt},\hspace{1mm} \forall X,Y\in \x(\gamma),\hspace{1mm} \forall a,b\in \R$,
+		\item $\dfrac{D(fX)}{dt}=\dfrac{df}{dt} X + f \dfrac{DX}{dt},\hspace{1mm} \forall f\in \F(I), \hspace{1mm} \forall X\in\x(\gamma) $,
+		\item For every $V\in \x(M)$, if $X\in \x(\gamma)$ is defined as $X(t)=V(\gamma(t)), \hspace{1mm} \forall t\in I$, then
+		\[
+		\frac{DX}{dt}=\nabla_{\gamma{\,'}} V,
+		\]
+		where $\gamma{\,'}=\dfrac{d\gamma}{dt}$ is the velocity field of $\gamma$.
+	\end{enumerate}
+	
+	From this notion we can define the acceleration of a curve $\gamma$ as the covariant derivative of its velocity field, i.e., $$\frac{D}{dt}\left(\frac{d\gamma}{dt}\right).$$
+\end{defi}
+
+In the case of $N=I$ being an open interval of $\R$, $\phi:I\to M$ a curve in $M$, for every $A\in \x(M)$ formula (\ref{conexion curva}) reads
+\begin{equation}
+	\frac{D}{dt}(A\circ \phi)=\bar{\nabla}_{\phi'(t)}A,
+\end{equation}
+and then the connection along $\phi$ induced by $\bar{\nabla}$ is indeed the covariant derivative.
+
+\begin{rem}
+	{\rm In the case of a semi-Riemannian manifold $(M,g)$, the induced covariant derivative of its Levi-Civita connection also satisfies
+		\begin{equation}\label{simetria}
+			\frac{d}{dt}g(X,Y)=g\left(\frac{DX}{dt},Y\right)+ g\left(X,\frac{DY}{dt}\right).
+		\end{equation}
+		for any $X,Y\in \x(\gamma)$, from compatibility of the Levi-Civita connection with $g$.	
+	}
+\end{rem}
+
+
+
+Let $(U,x_1,...,x_n)$ be a coordinate system and let $\gamma:I\to M$ be a curve. We can write locally $\gamma$ as $(x_1(t),...,x_n(t))$. For a vector field $X\in \x(\gamma)$ we have $X(t)=\sum_i X^i(t) \partial_i|_{\gamma(t)}$, then
+\begin{equation}\label{der cov 1}
+	\frac{DX}{dt}=\sum_i \frac{dX^i}{dt} \partial_i|_\gamma + \sum_i X^i \frac{D\partial_i|_\gamma}{dt}.
+\end{equation}
+Making use of property $(3)$ in Definition \ref{derivada covariante} we have $\frac{D\partial_i|_\gamma}{dt}=\nabla_{\gamma{\,'}} \partial_i$. Thus (\ref{der cov 1}) may be rewritten as
+\begin{equation}
+	\frac{DX}{dt}=\sum_i \frac{dX^i}{dt} \partial_i|_\gamma + \sum_i X^i \nabla_{\gamma{\,'}} \partial_i.
+\end{equation}
+Finally, we have
+\begin{equation}\label{der cov}
+	\frac{DX}{dt}=\sum_k \left( \frac{dX^k}{dt} + \sum_{ij} \Gamma_{ij}^k \frac{dx_i}{dt} X^j \right) \partial_k,
+\end{equation}
+on U, which could be a (local) equivalent definition of covariant derivative.
+
+\begin{defi}[Parallel vector field]
+	Let $M$ be a manifold and $\nabla$ an affine connection on $M$. Let $\gamma:I\to M$ be a curve. A vector field $X\in \x(\gamma)$ is called parallel (with respect to $\gamma$) if it satisfies $$\frac{DX}{dt}=0,\, \forall t \in I\,.$$
+\end{defi}
+
+\begin{pro}\label{campo vectores paralelo} 
+	Let $M$ be a manifold and let $\nabla$ be an affine connection on $M$. Let $\gamma:I\to M$ be a curve. Given $X_0 \in T_{\gamma(t_0)}M$, there exists a unique vector field $X\in \x(\gamma)$ such that
+	\[
+	\frac{DX}{dt}=0, \quad X(t_0)=X_0.
+	\]
+\end{pro}
+\begin{proof}
+	From equation (\ref{der cov}) the components of $X$ satisfy a system of linear differential equations with initial condition $X(t_0)=X_0$. Therefore, the vector field $X$ exists and is unique locally. An standard continuity argument gives the vector field on all $I$.  
+\end{proof}
+
+\begin{defi}[Parallel transport]
+	Let $(M,g)$ be a semi-Riemannian manifold and let $\nabla$ be its Levi-Civita connection. Then, for every curve $\gamma:I\to M$ and for every $t_1,t_2\in I$, with $t_1<t_2$, there exists a map
+	\[
+	P=P_{t_1,t_2}^\gamma : T_{\gamma(t_1)}M \longrightarrow T_{\gamma(t_2)}M
+	\]
+	defined as follows
+	\[
+	X_1 \longmapsto P(X_1)=P_{t_1,t_2}^\gamma(X_1):=X(t_2),
+	\]
+	where $X$ is the unique parallel vector field along $\gamma$ such that $X(t_1)=X_1$ (Proposition \ref{campo vectores paralelo}). We call this map the parallel transport along $\gamma$.
+\end{defi}
+
+\begin{pro}
+	The parallel transport along a curve $\gamma$ in a semi-Riemannian manifold is a linear isometry.
+\end{pro}
+\begin{proof}
+	Let $u,v\in T_{\gamma(t_1)}M$ and let $X,Y\in \x(\gamma)$ be the parallel vector fields obtained from the initial conditions $u,v$, respectively. Then $X+Y$ is also parallel along $\gamma$ with initial condition $u+v$. Therefore: $P(u+v)=(X+Y)(t_2)=X(t_2)+Y(t_2)=P(u)+P(v)$.
+	Analogously, $P(cv)=cP(v), \forall c\in \R,\forall v\in T_{\gamma(t_1)}M$. Hence, $P$ is linear. 
+	
+	If $P(v)=0$, the parallel vector field obtained from $v$ must be identically $0$ from the unicity proved in Proposition \ref{campo vectores paralelo}. Hence, $v=0$. Thus, the linear operator $P$ is one-to-one, and therefore it is a linear isomorphism. 
+	
+	Finally, for parallel vector fields $X,Y$ along $\gamma$ such that $X(t_1)=u$, $Y(t_1)=v$ we have from (\ref{simetria})
+	\[
+	\frac{d}{dt} g(X,Y)=g\left(\frac{DX}{dt}, Y\right) + g\left(X,\frac{DY}{dt}\right)=0\,.
+	\]
+	Consequently, $g(X,Y)$ is a constant giving
+	\[
+	g(P(u),P(v))=g(X(t_2),Y(t_2))=g(X(t_1),Y(t_1))=g(u,v),
+	\]
+	i.e., $P$ is a linear isometry.
+	
+\end{proof}
+
+\begin{rem}
+	{\rm In general, the parallel transport depends on the curve taken. However, note that in $\R^n$ the coordinate vector fields are parallel with respect to its usual connection. Therefore, the parallel transport of every vector is the usual isomorphism between the corresponding tangent spaces and it does not depend on the curve.
+	}
+\end{rem}
+
+\section{Geodesics}
+Now, we are going to give the generalization of straight line in Euclidean spaces to a general semi-Riemannian manifold. 
+\begin{defi}
+	Let $(M,g)$ be a semi-Riemannian manifold with $\text{dim}M=n$, and let $\gamma:I\to M$ be a curve. The curve $\gamma$ is said a geodesic in $M$ if
+	\begin{equation}
+		\frac{D}{dt}\left(\frac{d\gamma}{dt}\right)=0,
+	\end{equation}
+	for every $t\in I$, i.e., $\gamma$ is a geodesic when the velocity vector field $\gamma{\,'}$ is parallel. 
+\end{defi}
+
+Let us see the local differential equations that a geodesic $\gamma$ satisfies. 
+Let $(U,\psi)=(U,x_1,...,x_n)$ be a coordinate system with $\gamma(t_0)\in U$, for $t_0\in I$. Let $(x_1(t),...,x_n(t))$ be the local coordinates of $\gamma(t)$ for $t\in]t_0-\epsilon, t_0+\epsilon[$, with $\epsilon>0$ and $\gamma\left(]t_0-\epsilon,t_0+\epsilon[\right)\subset U$. Particularizing (\ref{der cov}) we get
+\begin{equation}\label{ec geodesic}
+	\frac{d^2 x_k}{dt^2}+\sum_{ij} \Gamma_{ij}^k \frac{dx_i}{dt} \frac{dx_j}{dt}=0,
+\end{equation}
+for every $k=1,..,n$. Hence, we have a local alternative definition of geodesics as a linear system of second order differential equations.	
+
+\begin{lem}\label{geodesica}
+	{\bf (1)} Let $(M,g)$ be a semi-Riemannian manifold and let $v\in T_pM$. Then, there exists an open interval $I$ that contains $0$ and a unique geodesic $\gamma:I\to M$ such that $\gamma{\,'}(0)=v$.
+	{\bf (2)} Let $\alpha,\beta:I\to M$ be geodesics in $(M,g)$. If there exists $t_0\in I$ such that $\alpha'(t_0)=\beta'(t_0)$, then $\alpha=\beta$.
+\end{lem}
+\begin{proof}
+	Assertion (1) is clear from uniqueness of solutions of a linear system of differential equations. Now suppose that (2) is not true, i.e., there exists $t_1\in I$ such that $\alpha(t_1) \ne \beta(t_1)$. Suppose $t_1>t_0$. 
+	Let consider the set $\{t\in I \, : \, t>t_0, \quad \alpha(t)\ne \beta(t)\} $. This has a lower bound $t^*\ge t_0$. If $t^*=t_0$, then $\alpha'(t^*)=\beta'(t^*)$. In other case, $t^*>t_0$, thus $\alpha=\beta$ in $\, ]t_0,t^*[$. We have
+	\[
+	\alpha'(t^*)=\lim_{t\to t^*, t<t^*} \alpha'(t)=\lim_{t\to t^*, t<t^*} \beta'(t)=\beta'(t^*).
+	\]
+	Hence, in either case, the curves $t\to \alpha(t+t^*)$ and $t\to \beta(t+t^*)$ are geodesics whose velocities coincide at $t=0$. From part (1) we have $\alpha=\beta$ on an open interval containing $t^*$, arriving to a contradiction. 
+\end{proof}
+
+\begin{pro}
+	Given $v\in T_pM$ there exists a unique geodesic $\gamma=\gamma_v$ in $M$ such that
+	\begin{enumerate}
+		\item Its initial velocity is $v$, i.e., $\gamma{\,'}(0)=v$.
+		\item Its definition domain $I$ is maximal, i.e., if $\alpha:J\to M$ is a geodesic with initial velocity $v$, then $J\subset I$ and $\alpha=\gamma|_J$.
+	\end{enumerate}
+\end{pro}
+\begin{proof}
+	Let $\F=\{ \gamma :I_\gamma \to M \, : \, \gamma{\,'}(0)=v\}$ be the family that contains any geodesic with initial condition $v$. This set is not empty, and also every $\alpha,\beta\in \F$ satisfies $\alpha=\beta$ on $I_\alpha \cap I_\beta$, from Lemma \ref{geodesica}. Hence we could extract naturally a geodesic in $\F$ defined in the interval $I=\cup_{\gamma \in \F} I_\gamma$, which will be the searched one.	
+\end{proof}
+
+The next result will be useful when we deal with the extension of geodesics via Lemma \ref{curv ext}.
+\begin{lem}\label{campo de vectores geodesic}
+	There exists a unique $G\in \x(TM)$ whose integral curves are $t\longrightarrow \big(\gamma(t), \gamma\,'(t)\big)$, where $\gamma:I\longrightarrow M$ are geodesics. This is called the geodesic field on TM.
+\end{lem}
+\begin{proof}
+	The existence and uniqueness of $G$ is given by the unique solution of the system 
+	$$\left.
+	\dfrac{dx_k}{dt} = y_k \atop
+	\dfrac{dy_k}{dt}= - \sum_{ij} \Gamma^k _{ij} y_i y_j
+	\right\}$$
+	with $k=1,...,n$, in terms of coordinates $(x_1,...,x_n,y_1,...,y_n)$ on TV, for every system of coordinates $(V,x_1,...,x_n)$ on M. This is just the equivalent system to the differential equation \ref{ec geodesic}.
+\end{proof}
+
+\section{Lorentzian manifolds}
+Finally, we are in a position to define the space where we can suitably describe Kinematics in General Relativity. The following notion give us the particular type of semi-Riemannian manifold that we need.
+\begin{defi}
+	Let $M$ be a manifold with $\text{dim}M=n(\ge 2)$. We define a Lorentzian metric $g$ on $M$ as a symmetric and $(0,2)$ tensor field
+	\[
+	g:M\to \t_{0,2}(M)
+	\]
+	such that, for every $p\in M$, 
+	\[
+	g_p : T_pM \times T_pM \longrightarrow \R
+	\]
+	is a non-degenerated symmetric bilinear form with index $1$. The pair $(M,g)$ is called a Lorentzian manifold. 
+\end{defi}
+
+\begin{defi}
+	Let $(M,g)$ a Lorentzian manifold and let $X\in \x(M)$. The vector field $X$ is said timelike (resp. spacelike, null, causal) if $X_p\in T_pM$ is  timelike (resp. spacelike, null, causal) for every point $p\in M$.
+\end{defi}
+
+Given a Lorentzian manifold $(M,g)$ we can use the vector Lorentzian Geometry tools in each $T_pM$. Recall that $\T(T_pM)=\{v\in T_pM \, : \, g_p(v,v)<0\}$ is the set of all timelike vectors in $T_pM$. Given $v\in \T(T_pM)$, the time cone defined by $v$ is the set
+$$C(v)=\{u\in \T(T_pM) \, : \, g_p(v,u)<0\}.$$ This gives us a proper way to define the sense of future in a Lorentzian manifold.
+
+\begin{defi}
+	Let $(M,g)$ be a Lorentzian manifold. The time cone bundle of $(M,g)$ is the set
+	$$C(M,g):=\bigcup_{p\in M} C(T_pM),$$ where $C(T_pM)=\{C(v),C(-v)\}$, with $v\in \T(T_pM)$. Now, a time orientation in $(M,g)$ is a map 
+	\[
+	\tau:M\longrightarrow C(M,g)
+	\]
+	\[
+	p\longmapsto \tau(p)\in C(T_pM)
+	\]
+	such that, for every $p\in M$, there exists an open neighbourhood, $U_p\subset M$, and there exists a timelike vector field $X\in \x(U_p)$ such that $X_q\in \tau(q),\hspace{1mm} \forall q \in U_p$. This last condition is just the way to say that $\tau$ is smooth. A Lorentzian manifold $(M,g)$ is time orientable if it admits a time orientation. 
+\end{defi}
+
+\begin{rem}
+	{\rm
+		{\bf (a)} If there exists a time orientation $\tau$ in $(M,g)$, then it is clear that there exists another time orientation, denoted by $-\tau$, namely $(-\tau)(p):=C(T_pM)\setminus \tau(p)$. {\bf (b)} Given any Lorentzian manifold $(M,g)$ the set of timelike tangent vectors $\T(TM):=\bigcup_{p\in M}\T(T_pM)$ has either one connected component or two \cite[Proposition 1.2.1]{SW}. Moreover, $(M,g)$ is time orientable if and only if $\T(TM)$ has two connected components \cite[Definition 1.2.2]{SW}). Even more, $(M,g)$ is time orientable if and only if there exists a globally defined timelike vector field on $M$ \cite[Lemma 5.32]{SRG}, \cite[Proposition 10]{SEC}. \\
+		{\bf (c)} Note that time orientation is a metric notion, i.e., it depends on the Lorentzian metric, whereas the topological orientation does not. \\
+		{\bf (d)} Time orientation is essential to speak of travels of relativistic particles, as we will see in next Chapter.  
+	}
+\end{rem}
+
+\begin{ex}
+	{\rm 
+		Not every Lorentzian manifold is time orientable. 
+		Indeed, let $\tilde{g}$ be the Lorentzian metric in $\R^2$ given by
+		\[
+		\tilde{g}\left(\frac{\partial}{\partial x}, \frac{\partial}{\partial x}\right)=-\tilde{g}\left(\frac{\partial}{\partial y}, \frac{\partial}{\partial y}\right)=\cos(2y)\,,
+		\]
+		\[
+		\tilde{g}\left(\frac{\partial}{\partial x},\frac{\partial}{\partial y}\right)=\sin(2y)\,.
+		\]
+		Note that
+		\[
+		\mathrm{det}\left( \begin{array}{cc}
+			\cos 2y & \hspace*{4mm}\sin 2y  \\
+			\sin 2y & -\cos 2y
+		\end{array} \right)=-1<0,
+		\]
+		everywhere on $\R^2$ and consequently $\tilde{g}$ is Lorentzian. Even more, $(\R^2,\tilde{g})$ is time orientable since $Y=-\sin y\dfrac{\partial}{\partial x} + \cos y \dfrac{\partial}{\partial y}\in \x(\R^2)$ is globally timelike, i.e., we can take the time cone at every point $(x,y)$ which contains $Y_{(x,y)}$.
+		
+		Now, consider the map $f : \R^2 \longrightarrow \R^2$, $f(x,y)=(x,y+\pi)$. This is an isometry in $(\R^2,\tilde{g})$. From that, we construct $M:=\R^2 / \Z$, where $\Z$ acts on $\R^2$ by
+		$$\big(\,m,(x,y)\,\big) \mapsto f^m(x,y)=(x,y+m\pi),$$
+		i.e., $M$ is a cylinder. Clearly, $\tilde{g}$ is unchanged by $f$, and therefore $\tilde{g}$ can be induced to get a Lorentzian metric $g$ on $M$. 
+		
+		Note that the vector field $Y$ satisfies $Y_{(0,0)}=\frac{\partial}{\partial y}\mid_{(0,0)}$ and $Y_{(0,\pi)}=-\frac{\partial}{\partial y}\mid_{(0,\pi)}$. That is, if we choose a time cone along the $x=0$ axis, it makes a rotation between $(0,0)$ and $(0,\pi)$, and both of them are the same in $M$. Moreover, $df_{(0,0)}Y_{(0,0)}=-Y_{(0,\pi)}$. Therefore we cannot induced $Y$ on $M$. Assume there exists $X\in \x(M)$ such that $g(X,X)<0$, and let $\tilde{X}\in \x(\R^2)$ with $\tilde{g}(\tilde{X},\tilde{X})<0$ and such that it is projected on $X$. Necessarily $df_{(x,y)}X_{(x,y)}=X_{(x,y+\pi)}$ and $g(Y_{(x,y)},X_{(x,y)})\ne 0, \forall(x,y)\in \R^2$. Hence, either $g(X,Y)>0$ or $g(X,Y)<0$ always. However, this is not compatible with 
+		\[
+		g(Y_{(0,\pi)},X_{(0,\pi)})=-g(df_{(0,0)}Y_{(0,0)}, df_{(0,0)}X_{(0,0)})=-g(Y_{(0,0)}, X_{(0,0)}),
+		\]
+		Then we arrive to a contradiction. Hence, $M$ is not time orientable.
+	}
+\end{ex}
+
+Finally, we are in a position to introduce the mathematical object where General Relativity works.
+\begin{defi}[Spacetime]
+	A spacetime is a list $(M,g,\tau)$, where $(M,g)$ is a  time orientable Lorentzian manifold, with $\text{dim}M=4$, and $\tau$ is a time orientation in $(M,g)$. The points in $M$ are called events.
+\end{defi}
+
+One could ask why we are imposing time-orientability to a spacetime. Physically, the second law of thermodynamic processes gives us a way to distinguish between past and future, thus it is reasonable to assume that we could identify future events by simply measuring entropy. 
+
+We know that Lorentz-Minkowski spacetime $\L^4$ models Special Relativity. When radiation and gravitational effects appear, i.e., in the arena of General Relativity, curved spacetimes are used to model these relativistic universes via the Einstein equation. Several spacetimes will appear in the following chapter.
+
+\begin{defi}
+	A curve $\gamma : I \to M$ in a spacetime $(M,g,\tau)$ is said future-pointing if 
+	$\gamma{\,'}(u)\in \tau(\gamma(u))$ for all $u\in I$. Thus, $\gamma{\,'}$ is timelike and lies in the time cone in $T_{\gamma(u)}M$ given by the time orientation $\tau$. If there exists a future-pointing curve from $x$ to $y$, the event $y\in M$ can be causally influenced by $x\in M$ ($y$ is an event in the chronological future of $x$). 
+\end{defi}
+
+The study of the existence or not existence of a future-pointing curve joining two given events $x$, $y$ in a spacetime is a causality property \cite[Chapter 8]{K}, \cite[Chapter 14]{SRG}. In a general spacetime it could exists a closed future-pointing curve. This fact is not commonly accepted in General Relativity because it is interpreted as a theoretical possibility of the existence of a time travel machine.
+
+\section{Completeness of compact Lorentzian manifolds}\label{section 1.6}
+This last section is devoted to obtaining a result of completeness of a compact Lorentzian manifold under certain conditions, following \cite{RS}.
+\begin{defi}
+	An inextensible geodesic $\gamma$ is called complete if it is defined for all $t\in \R$.
+	A Lorentzian manifold $(M,g)$, a spacetime in particular, is timelike, null or spacelike complete if its timelike, null or spacelike inextensible geodesics are complete. 
+\end{defi}
+While in classical field theories the notion of singularity is well defined, the task is more difficult in General Relativity. It is due to the relation between field and spacetime where it is described: here we are working with the way of measurement itself (see \cite{SgG}). In fact, a spacetime is said free of singularities if every inextensible timelike or null geodesic is complete \cite[Definition 1]{SgG}. However, there are some problems with this definition. For example, it is still unknown whether the 3 completeness types are logically independent \cite[Section 2]{MLG}.
+
+Later, we will obtain conditions to ensure that the uniformly accelerated observers are complete in a spacetime, and then the timelike completeness will be a particular case. Nevertheless, in this section we will prove a general completeness of a compact Lorentzian manifold. In order to do that, we need the next
+\begin{lem}\label{lem geod}
+	Let $(M,g)$ be a compact Lorentzian manifold, $Q$ a unitary timelike vector field and $\gamma:I\to M$ a geodesic. If the function $t\in I \mapsto g\big(Q_{\gamma(t)}, \gamma\,'(t)\big)$ is bounded, then the velocity vector field $\gamma\,'$ remains in a compact subset of $TM$. 
+\end{lem}
+\begin{proof}
+	Let $Q^b$ be the 1-form metric equivalent to $Q$ (i.e., $Q^b(X)=g(Q,X),\forall X\in \x(M)$), and let $g_R:=g+2Q^b \otimes Q^b$ be the associated Riemannian metric. Note that $g_R$ coincide with $g$ on $Q^\perp$, $g_R$ equals to $-g$ on $\text{Span}(\{Q\})$, and $\text{Span}(\{Q\})$ and $Q^\perp$ are also $g_R$-orthogonal. Consider
+	\[
+	g_R (\gamma\,' , \gamma\,') = g(\gamma\,' , \gamma\,') + 2g(Q_{\gamma}, \gamma\,')^2 
+	\]
+	which is bounded on $I$ by assumption. Therefore there exists a constant $c\ge 0$ such that
+	\[
+	\big(\gamma(I), \gamma\,'(I)\big) \subset \{(p,v)\in TM \, : \, p\in M, g_R(v,v)\le c \}.
+	\]
+\end{proof}
+
+Recall that a vector field $K$ on $M$ is called conformal if the Lie derivative of the metric with respect to $K$ satisfies
+\begin{equation}\label{def conformal}
+L_K g= 2\lambda g.
+\end{equation}
+for certain $\lambda \in \F(M)$.
+Let $\gamma:I\to M$ be a curve. Note that if $K$ is conformal then
+\begin{equation}\label{conformal}
+\frac{d}{dt} g(K_\gamma,\gamma\,')= g\big(K_\gamma, \frac{D\gamma\,'}{dt}\big) + \lambda\circ \gamma \, g(\gamma\,' , \gamma\,').
+\end{equation}
+
+\begin{theor}
+	Let $(M,g)$ be a compact Lorentzian manifold which admits a timelike conformal vector field $K$. Then $(M,g)$ is complete.
+\end{theor}
+\begin{proof}
+	If suffices to show that a geodesic $\gamma: [0,b[ \to M$, with $0 < b <\infty$, is extensible beyond b. Let $g(\gamma\,', \gamma\,')=c\in \R$. Now, as $K$ is timelike and $M$ is compact, then $\inf_M |g(K,K)| > 0$. Therefore, we can define $$Q:=\dfrac{K}{\sqrt{-g(K,K)}}$$ a unitary timelike vector field. Let see the function $t\mapsto g(Q_\gamma,\gamma\,')$ is bounded. From equation (\ref{conformal}) we have
+	\[
+	\frac{d}{dt} g(K_\gamma, \gamma\,') = c \lambda \circ \gamma,
+	\]
+	since $K$ is conformal. Using M is compact, then $\lambda \circ \gamma$ is bounded, and therefore 
+	\[
+	g(K_\gamma, \gamma\,') = c \lambda \circ \gamma(t_0) + c \int_{t_0}^t \lambda \circ \gamma(z) dz,
+	\]
+	for certain $t_0\in I$, is a bounded function. Finally, we have also
+	\[
+	\left|g(Q_\gamma, \gamma\,')\right| = \frac{\left|g(K_\gamma, \gamma\,')\right|}{|g(K_\gamma,K_\gamma)|} \le \sup_M |g(K_\gamma,K_\gamma)|^{-1} \left|g(K_\gamma, \gamma\,')\right|,
+	\]
+	bounded from previous assertions.
+	Hence, using Lemma \ref{lem geod}, the velocity vector field $\gamma\,'$ remains in a compact subset of $TM$. The proof ends making use of Lemma \ref{curv ext}.
+\end{proof}
+
+\chapter{Kinematics in General Relativity}\label{Chapter3}
+In this chapter, we follow essentially \cite{UAM}, \cite{UDM}, \cite{UCM} and \cite{GyR}.
+
+\section{Particles and observers}
+We are now able to give the definition of particle in a general spacetime (see \cite{SW}).
+\begin{defi}[Particles]
+	A particle of mass m$(\ge 0)$ in a spacetime $(M,g,\tau)$ is a curve $\gamma:I\to M$ that satisfies
+	\begin{enumerate}
+		\item $g(\gamma{\,'}(u),\gamma{\,'}(u))=-m^2,\forall u\in I$,
+		\item $\gamma{\,'}$ is future-pointing.
+	\end{enumerate}
+	If $m=1$ $\gamma$ is called an observer, and if $m=0$ $\gamma$ is called a photon. The trace, $Im\gamma$, is known as the world line of $\gamma$ and it represents the events in spacetime that the particle experiences. 
+	On the other hand, the velocity field $\gamma{\,'}$ is called the $4$-velocity (or the energy-momentum) of $\gamma$ and $\dfrac{D\gamma{\,'}}{du}$ the $4$-acceleration (or world acceleration). We say that $\gamma$ is freely falling if $\dfrac{D\gamma{\,'}}{du}=0$, i.e., if $\gamma$ is a geodesic in $(M,g)$.
+	For an observer $\gamma$, the parameter $u\in I$ is called its proper time, $I$ its proper clock and $\gamma(u)$ the event that $\gamma$ experiences when its clock points to $u$.
+\end{defi}
+
+\begin{rem}
+	{\rm
+		Note that if we have a future-pointing timelike curve $\alpha$, then we can obtain an observer if we parametrized it by arc length. For that, it is enough to take $s(t)=\int_{t_0}^{t} \sqrt{-g(\alpha'(z),\alpha'(z))}\, dz$ and $\gamma(u):=\alpha(s^{-1}(u))$ will be an observer. Indeed, it is true for a particle with mass $m>0$.
+	}
+\end{rem}
+
+It is useful for some computations to introduce the local notion of observer,
+\begin{defi}[Instantaneous observer]
+	Let $(M,g,\tau)$ be a spacetime. An instantaneous observer is a pair $(p,Z)$, where $p\in M$ and $Z\in T_pM$ satisfy $g_p(Z,Z)=-1$ and $Z$ is future-pointing $($i.e., $Z\in \tau(p))$.
+\end{defi}
+
+As a consequence of the orthogonal decomposition of a Lorentzian vector space, we have
+\begin{pro}\label{descomposicion}
+	Let $(M,g,\tau)$ be a spacetime and let $(p,Z)$ be an instantaneous observer. Then
+	\begin{equation}\label{ecuacion desc}
+		T_pM=\textrm{Span}(\{Z\})\oplus Z^\perp 
+	\end{equation}
+	where $\textrm{Span}(\{Z\})$ is the linear subspace of $T_pM$ spanned by $Z$. Moreover, $(Z^\perp, g|_{Z^\perp})$ is an Euclidean $3$-dimensional subspace, called the local rest space observed by $(p,Z)$. It represents the Euclidean space that happens simultaneously to $(p,Z)$.
+\end{pro}
+
+\begin{defi}
+		Let $\gamma:I\to M$ be a particle of mass $m$ and take $p=\gamma(u)$ for $u\in I$. For each instantaneous observer $(p,Z)$, from the splitting (\ref{ecuacion desc}) we have $\gamma{\,'}(u)=eZ+P$. 
+	The scalar $e=-g(\gamma{\,'}(u),Z)(>0)$ is called the energy that $(p,Z)$ measure from $\gamma{\,'}(u)$, and the vector $P$ is the $3-$momentum relative to $(p,Z)$. Furthermore, $v=\frac{1}{e}P$ is the velocity (or 3-velocity) of $\gamma{\,'}(u)$ measured by $(p,Z)$, and we write the length of this vector as $|v|=\sqrt{g(v,v)}$ (the speed observed by $(p,Z)$ of $\gamma{\,'}(u)$).
+\end{defi}
+	
+Observe that we are considering the light velocity in the vacuum $c=1$. Next result remains true in any $T_pM$.
+\begin{pro}\label{prop particula}
+	Let $\gamma$ be a particle of mass $m$. Let $(\gamma(u),Z)$ be an instantaneous observer and let $e$, $P$ and $v$ be the relative measures observed by $(\gamma(u),Z)$ from $\gamma\,'(u)$. Then
+	\begin{enumerate}
+		\item[(1)] $0\le |v| \le 1$ $\big(|v|$ is never greater than $c=1\big)$
+		\item[(2)] $|v|=1 \iff m=0$ $\big(|v|$ reach $c=1$ if and only if $\gamma$ is massless$\big)$
+	\end{enumerate}
+	Moreover, if $m>0$ (and then $|v|<1$) it turns out
+	\[
+	e=\frac{m}{\sqrt{1-|v|^2}} \quad \left(e=\frac{mc^2}{\sqrt{1-\frac{|v|^2}{c^2}}} \text{ in the IS of unit}\right),
+	\]
+	and we can derive
+	\[
+	e=m \iff v=0, \, \left(\text{i.e., } e=mc^2 \iff \gamma(u) \text{ is at rest for } (p,Z)\right)
+	\]
+\end{pro}
+\begin{proof}
+	We have $\gamma{\,'}(u)=eZ+P$ from (\ref{ecuacion desc}), and hence, $-m^2=g(\gamma{\,'}(u),\gamma{\,'}(u))=-e^2+g(P,P).$ Therefore,
+	\[
+	0\le g(v,v)=\frac{1}{e^2}g(P,P)=\frac{1}{e^2}(e^2-m^2)=1-\left(\frac{m}{e}\right)^2\le 1\,,
+	\]
+	obtaining $(1)$. Clearly, we also get $(2)$. Finally, in the case $m>0$, the last statement is easy to compute from $-m^2=-e^2(1-|v|^2)$.
+\end{proof}	
+
+\begin{defi}[Local rest space]\label{Local rest space}
+	Let $\gamma$ be an observer in a spacetime $(M,g,\tau)$. We know that, for every $u\in I$, it is satisfied 
+	\begin{equation}\label{desc esp tang}
+		T_{\gamma(u)}M=T_u^\gamma \oplus R_u^\gamma
+	\end{equation}
+	where $T_u^\gamma=\text{Span}(\{\gamma{\,'}(u)\})$ and $R_u^\gamma=\gamma{\,'}(u)^{\perp}$. The last subspace is called the local rest space that $\gamma$ observes in its proper time $u$, and it represents the $3$-dimensional space that happens simultaneously to $\gamma(u)$.
+	
+	For every $A\in \x(\gamma)$ we write
+	$$A=A^T + A^R,$$ the decomposition of $A$ at any point of $M$, given by Proposition \ref{descomposicion}. That is, for every $u\in I$, we take $A_u^T:=-g(\gamma{\,'}(u),A_u)\gamma{\,'}(u)\in T_u^\gamma$ and $A_u^R:=A_u-A_u^T\in R_u^\gamma$, the corresponding projections of $A_u$. 
+\end{defi}
+
+\begin{rem}\label{deriv ortogonal}
+	{\rm Let $(M,g,\tau)$ be a spacetime and let $\gamma:I\to M$ be an observer in $M$. The $4$-acceleration $\dfrac{D\gamma{\,'}}{du}$ of $\gamma$ satisfies $\dfrac{D\gamma{\,'}}{du}(u)\in R_u^\gamma $ for all $u\in I$. Indeed, since $\gamma$ is an observer we have $g(\gamma{\,'},\gamma{\,'})=-1$ and then
+	\[
+	0=\frac{1}{2}\,\frac{d}{du}g(\gamma{\,'},\gamma{\,'})=g\Big(\frac{D\gamma{\,'}}{du},\gamma{\,'}\Big),
+	\]	
+	where we use the compatibility property of the covariant derivative along $\gamma$ with the metric.
+	}
+\end{rem}
+
+\section{Fermi-Walker connection of an observer}
+The notion of the Fermi-Walker connection of an observer provides a tool to compare the local rest spaces of an observer at two different instants of its proper time (see \cite{GL}). Even in flat spacetime, if you want to compare relative quantities of an observer at two different instants of its proper time, it is needed a ``parallel transport'' which relates the local rest spaces at the two proper times. At first, we could think of a coordinate system to describe every observer motion in $\L^4$, for example. However, it suffices to think in a static observer from one frame, that accelerates somehow to a constant-velocity motion with respect to the original frame. Then, as the latter frame would be rotated from the first, the second ``constant velocity'' local rest space would intersect the original one, i.e., we would have a region of spacetime that is in two different times at once (see \cite[Chapter 6]{Gravitation}).
+
+First of all, note that if $\gamma$ is a freely falling observer in a certain spacetime, then the parallel transport along $\gamma$, $P_{u_1,u_2}^\gamma$, satisfies $P_{u_1,u_2}^\gamma(\gamma{\,'}(u_1))=\gamma{\,'}(u_2)$. Therefore, if $v\in R_{u_1}$ we have
+\[
+g(P_{u_1,u_2}^\gamma(v),\gamma{\,'}(u_2))=g(v,\gamma{\,'}(u_1))=0,\hspace{1mm} \forall v\in R_{u_1},
+\] 
+which means that $P_{u_1,u_2}^\gamma(v)\in R_{u_2}$. Hence, $P_{u_1,u_2}^\gamma|_{R_{u_1}}:R_{u_1}\to R_{u_2}$ is a linear isometry.	
+		
+In this reasoning the fact that $\gamma$ is freely falling is essential. If this assumption is deleted, clearly the conclusion is not achieved. Our task is now to define a new connection along any observer $\gamma$ that preserves local rest spaces for $\gamma$.  
+
+\begin{pro}\label{existencia and unicidad conexion FM}
+	Let $(M,g,\tau)$ be a spacetime and $\gamma:I\to M$ an observer. Let $\overline{\nabla}$ be the Levi-Civita connection of $g$, and $\nabla$ the induced connection along $\gamma$. Then there exists a unique connection $\widehat{\nabla}$ along $\gamma$ such that
+	\begin{equation}\label{conexion FM}
+		\widehat{\nabla}_X A=(\nabla_X A^T)^T + (\nabla_X A^R)^R,
+	\end{equation}
+	for every $X\in \x(I)$ and every $A\in \x(\gamma)$. This connection is called the Fermi-Walker connection along $\gamma$. The induced covariant derivative is called the Fermi-Walker covariant derivative.
+\end{pro}
+\begin{proof}
+	The uniqueness is trivial from equation (\ref{conexion FM}). If we define $\widehat{\nabla}$ as (\ref{conexion FM}) states, we have a connection along $\gamma$. Clearly, $\widehat{\nabla}_X A\in \x(\gamma)$. 
+	Now, if $X,X_1,X_2\in \x(I)$, $A,B\in \x(\gamma)$ and $f,g\in \F(M)$, then
+	\\
+	$1. \hspace{20mm} \widehat{\nabla}_{fX_1+gX_2} A=(\nabla_{fX_1+gX_2} A^T)^T+(\nabla_{fX_1+gX_2} A^R)^R$
+	
+	\vspace{1mm}
+	$\hspace{38mm}= (f\nabla_{X_1} A^T+ g\nabla_{X_2} A^T)^T + (f\nabla_{X_1} A^R + g\nabla_{X_2} A^R)^R$
+	
+	\vspace{1mm}
+	$\hspace{38mm}=f(\nabla_{X_1} A^T)^T+f(\nabla_{X_1} A^R)^R+g(\nabla_{X_2} A^T)^T+g(\nabla_{X_2} A^R)^R$ 
+	
+	\vspace{1mm}
+	$\hspace{38mm}=f\widehat{\nabla}_{X_1} A + g\widehat{\nabla}_{X_2} A,$
+	\\ \\
+	$2.\hspace{21mm} \widehat{\nabla}_{X}(A+B)=(\nabla_{X} (A+B)^T)^T+(\nabla_{X} (A+B)^R)^R$
+	
+	\vspace{1mm}
+	$\hspace{38mm}=(\nabla_{X} A^T)^T+(\nabla_{X} A^R)^R + (\nabla_{X} B^T)^T+(\nabla_{X} B^R)^R \hspace{5mm}$
+	
+	\vspace{1mm}
+	$\hspace{38mm}=\widehat{\nabla}_{X} A+\widehat{\nabla}_{X} B,\hspace{64mm}$
+	\\ \\
+	$3. \hspace{29mm} \widehat{\nabla}_{X} fA=(\nabla_{X} (fA)^T)^T+(\nabla_{X} (fA)^R)^R$ 
+	
+	\vspace{1mm}
+	$\hspace{38mm}=(X(f)A^T + f\nabla_{X} A^T)^T + (X(f)A^R + f\nabla_{X} A^R)^R\hspace{4mm}$ 
+	
+	\vspace{1mm}
+	$\hspace{38mm}=X(f)(A^T+A^R) + f(\nabla_{X} A^T)^T + f(\nabla_{X} A^R)^R\hspace{11mm}$ 
+	
+	\vspace{1mm}
+	$\hspace{38mm}=X(f)A + f\widehat{\nabla}_{X} A.\hspace{60mm}$ \\
+	Hence, $\widehat{\nabla}$ is a connection along $\gamma$ in the sense of Definition \ref{conexion along curva}. 
+\end{proof}
+
+\begin{rem}
+	{\rm
+	Taking $X=\dfrac{d}{du}$, the previous Proposition above states
+	\begin{equation}\label{expresion der cov FM}
+		\frac{\widehat{D}A}{du}=\left(\frac{DA^T}{du}\right)^T+\left(\frac{DA^R}{du}\right)^R
+	\end{equation}
+	that is in fact equivalent to (\ref{conexion FM}). This is called the Fermi-Walker covariant derivative.} 
+\end{rem}
+
+A useful way to express the Fermi-Walker covariant derivative along $\gamma$ in terms of the usual covariant derivative is given in the following result
+\begin{pro}\label{prop der cov FM}
+	Let $(M,g,\tau)$ be a spacetime and $\gamma:I\to M$ an observer. Let $\overline{\nabla}$ be the Levi-Civita connection of $g$, and $\nabla$ the induced connection along $\gamma$. Then, the Fermi-Walker covariant derivative along $\gamma$ turns out
+	\begin{equation}\label{der cov FM}
+		\frac{\widehat{D}A}{du}=\frac{DA}{du}+g\big(A,\gamma{\,'}\big)\frac{D\gamma{\,'}}{du}-g\Big(A,\frac{D\gamma{\,'}}{du}\Big)\gamma{\,'},
+	\end{equation}
+	for every $A\in \x(\gamma)$.
+\end{pro}
+\begin{proof}
+	We know that $A^T=-g(A,\gamma{\,'})\gamma{\,'}$ from definition \ref{Local rest space}. Then
+	\begin{align*}
+		\frac{DA^T}{du} & =-\frac{d}{du}\big(g(A,\gamma{\,'})\big)\gamma{\,'} - g(A,\gamma{\,'})\frac{D\gamma{\,'}}{du} \\[2mm]
+		& =-g\Big(\frac{DA}{du},\gamma{\,'}\Big)\gamma{\,'} -g\Big(A,\frac{D\gamma{\,'}}{du}\Big)\gamma{\,'}-g(A,\gamma{\,'})\frac{D\gamma{\,'}}{du}.
+	\end{align*}
+	Since $\dfrac{D\gamma{\,'}}{du}\perp \gamma{\,'}$, then the previous expression is equivalent to
+	\begin{equation}\label{form 1}
+		\left(\frac{DA^T}{du}\right)^T=-g\Big(\frac{DA}{du},\gamma{\,'}\Big)\gamma{\,'}-g\Big(A,\frac{D\gamma{\,'}}{du}\Big)\gamma{\,'}.
+	\end{equation}
+	Since $A^R=A-A^T$, then
+	\[
+	\left(\frac{DA^R}{du}\right)^R=\left(\frac{DA}{du}\right)^R-\left(\frac{DA^T}{du}\right)^R,
+	\]
+	and now substituting both terms
+	\begin{equation}\label{form 2}
+		\left(\frac{DA^R}{du}\right)^R=\frac{DA}{du}+g\Big(\frac{DA}{du},\gamma{\,'}\Big)\gamma{\,'}+g(A,\gamma{\,'})\frac{D\gamma{\,'}}{du}
+	\end{equation}
+	The result is obtained taking into account expressions (\ref{form 1}) and (\ref{form 2}).
+\end{proof}
+
+\begin{pro}\label{propiedades de FM}
+	Let $(M,g,\tau)$ be a spacetime and $\gamma:I\to M$ an observer. Then we have
+	\begin{enumerate}
+		\item[(1)] The Fermi-Walker covariant derivative of the velocity field $\gamma{\,'}$ vanishes, i.e., $\dfrac{\widehat{D}\gamma{\,'}}{du}=0$.
+		
+		\item[(2)] $\gamma$ is freely falling if and only if its Fermi-Walker connection equals to the induced connection along $\gamma$.
+		
+		\item[(3)]\label{FM prop 4} For every $X,Y\in \x(\gamma)$, we have $$\dfrac{d}{du}g(X,Y)=g\Big(\dfrac{\widehat{D}X}{du},Y\Big)+g\Big(X,\dfrac{\widehat{D}Y}{du}\Big).$$
+		
+		\item[(4)] For every $X\in \x(\gamma)$ such that $X=X^R$, we have
+		$$\dfrac{\widehat{D}X}{du}=\dfrac{DX}{du}+g\Big(\dfrac{DX}{du},\gamma{\,'}\Big)\gamma{\,'}\in R_u.$$
+	\end{enumerate}
+\end{pro}
+\begin{proof}
+	$(1)$ It suffices to compute
+	\[
+	\frac{\widehat{D}\gamma{\,'}}{du}=\frac{D\gamma{\,'}}{du}+g(\gamma{\,'},\gamma{\,'})\frac{D\gamma{\,'}}{du}-g\Big(\gamma{\,'},\frac{\widehat{D}\gamma{\,'}}{du}\Big)\gamma{\,'}=0.
+	\]
+	\\	
+	$(2)$ The necessary condition is clear from $\dfrac{\widehat{D}\gamma{\,'}}{du}=0$. Conversely, 
+	the assumption gives $\dfrac{\widehat{D}X}{du}=\dfrac{DX}{du},\forall X\in\x(\gamma)$. Then, it follows
+	\[
+	g(X,\gamma{\,'})\frac{D\gamma{\,'}}{du}-g\Big(X,\frac{D\gamma{\,'}}{du}\Big)\gamma{\,'}=0,
+	\]
+	for every $X\in \x(\gamma)$. Thus, since $\gamma{\,'}$ and $\dfrac{D\gamma{\,'}}{du}$ are orthogonal (see Remark \ref{deriv ortogonal}), we have
+	\[
+	g\Big(X,\frac{D\gamma{\,'}}{du}\Big)=0,\hspace{2mm}\forall X\in\x(\gamma).
+	\]
+	Therefore, as $g$ is non-degenerated, $\dfrac{D\gamma{\,'}}{du}=0$.
+	\\
+	$(3)$ Taking in mind (\ref{der cov FM}) we have
+	\begin{align*}
+	\frac{d}{du} g(X,Y) & = g\Big(\frac{DX}{du},Y\Big)+ g\Big(X,\frac{DY}{du}\Big) \\[2mm]
+	& = g\Big(\frac{\widehat{D}X}{du},Y\Big)+ g\Big(X,\frac{\widehat{D}Y}{du}\Big) -g(X,\gamma{\,'})g\Big(\frac{D\gamma{\,'}}{du},Y\Big) \\[2mm]
+	&+g\Big(X,\frac{D\gamma{\,'}}{du}\Big)g(\gamma{\,'},Y)-g(Y,\gamma{\,'})g\Big(X,\frac{D\gamma{\,'}}{du}\Big)+g\Big(X,\frac{D\gamma{\,'}}{du}\Big)g(X,\gamma{\,'})\\[2mm]
+	& = g\left(\frac{\widehat{D}X}{du},Y\right)+ g\left(X,\frac{\widehat{D}Y}{du}\right).
+	\end{align*}
+	$(4)$ If $X\in \x(\gamma)$ such that $X=X^R$, then
+	\[
+	\frac{\widehat{D}X}{du}=\frac{DX}{du}-g\Big(X,\frac{D\gamma{\,'}}{du}\Big)\gamma{\,'},
+	\]
+	which can be written using $g(X,\gamma{\,'})=0$ as follows
+	\[
+	\frac{\widehat{D}X}{du}=\frac{DX}{du}+g\left(\frac{DX}{du},\gamma{\,'}\right)\gamma{\,'}.
+	\]
+\end{proof}
+
+\begin{defi}[Fermi-Walker parallel vector field]
+	Let $(M,g,\tau)$ be a spacetime and $\gamma:I\to M$ an observer. We say that $X\in\x(\gamma)$ is Fermi-Walker parallel if $$\frac{\widehat{D}X}{du}=0.$$
+ From Proposition \ref{prop der cov FM}, it is equivalent to 
+ \begin{equation}
+  \frac{DX}{du}=-g\big(\gamma{\,'},X\big)\frac{D\gamma{\,'}}{du}+g\Big(\frac{D\gamma{\,'}}{du},X\Big)\gamma{\,'}. 
+\end{equation}
+\end{defi}
+A Fermi-Walker parallel vector field $X\in\x(\gamma)$ can be interpreted as an object that remains constant when it is measured by the observer $\gamma$. Hence, this notion will be used to define the different motions in Kinematics.
+
+\begin{pro}
+	Let $(M,g,\tau)$ be a spacetime and $\gamma:I\to M$ an observer. Given $V\in T_{\gamma(u_0)}M$, there exists a unique $X\in \x(\gamma)$ Fermi-Walker parallel such that $X(u_0)=V$.
+\end{pro}
+\begin{proof}
+	Let $(U,x_1,x_2,x_3,x_4)$ be a coordinate system of $\gamma(u_0)$ in $M$. We have on $Im\gamma \cap U\ne \emptyset$, \, $\left(\dfrac{\partial}{\partial x_1}\circ \gamma(u),\dfrac{\partial}{\partial x_2}\circ \gamma(u),\dfrac{\partial}{\partial x_3}\circ \gamma(u),\dfrac{\partial}{\partial x_4}\circ \gamma(u)\right)$ is a basis in $T_{\gamma(u)}M$ for every $u\in I$ with $\gamma(u)\in U$. Therefore, we can (locally) write $X(u)=\sum_j X^j(u) \dfrac{\partial}{\partial x_j}\circ \gamma(u)$.
+	
+	If we define the functions $\widehat{\Gamma}^i_j$ by $\left(\dfrac{\widehat{D}}{du}\dfrac{\partial}{\partial x_j}\circ \gamma \right)(u)=\sum_i \widehat{\Gamma}^i_j(u) \dfrac{\partial}{\partial x_i}\circ \gamma(u)$, which are clearly smooth, then, 
+	\[
+	\frac{\widehat{D}X}{du}=0 \iff \frac{dX^k}{du} + \sum_j \widehat{\Gamma}^k_j X^j=0,\hspace{2mm} \forall k=1,2,3,4
+	\]
+	Therefore, we have a system of linear differential equations, with initial condition $X^j(u)=(dx_j)_{\gamma(u_0)}V$, $j=1,2,3,4$, and we know that it has a unique inextensible solution in $U$. Considering open neighbourhoods $U$ such that $Im\gamma \cap U\ne \emptyset$, and using the uniqueness, we obtain $X\in \x(\gamma)$.
+\end{proof}
+
+\begin{defi}\label{FW parallel transport}[Fermi-Walker parallel transport]
+	Let $(M,g,\tau)$ be a spacetime and $\gamma:I\to M$ an observer. Let $u_1,u_2\in I$, $u_1<u_2$. The Fermi-Walker parallel transport is the map
+	\[
+	\widehat{P}=\widehat{P}_{u_1,u_2}^\gamma : T_{\gamma(u_1)}M \to T_{\gamma(u_2)}M
+	\]
+	given by
+	\[
+	V_1 \longmapsto \widehat{P}(V_1)=\widehat{P}_{u_1,u_2}^\gamma(V_1):=X(u_2),
+	\]
+	where, for every $V_1\in T_{\gamma(u_1)}M$, $X$ is the unique Fermi-Walker parallel vector field along $\gamma$ that satisfies $X(u_1)=V_1$. 
+\end{defi}
+
+In the following result we see that the Fermi-Walker parallel transport isometrically preserves the local rest spaces of $\gamma$.
+\begin{pro}
+	The Fermi-Walker parallel transport is a linear isometry. Moreover, it satisfies
+	\begin{enumerate}
+		\item[(1)] $\widehat{P}_{u_1,u_2}^\gamma(\gamma{\,'}(u_1))=\gamma{\,'}(u_2)$,
+		\item[(2)] $\widehat{P}_{u_1,u_2}^\gamma|_{R_{u_1}} :R_{u_1}\to R_{u_2}$ is a linear isometry.
+	\end{enumerate}
+\end{pro}
+\begin{proof}
+	Let $V_1,V_2\in T_{\gamma(u_1)}M$, and let $X_1,X_2\in \x(M)$ be the Fermi-Walker parallel vector fields along $\gamma$ with initial conditions $V_1,V_2$, respectively.
+	Then $\widehat{P}(V_1+V_2)=(X_1+X_2)(u_2)=X_1(u_2)+X_2(u_2)=\widehat{P}(V_1)+\widehat{P}(V_2)$, where we use the uniqueness of the vector fields $X_1,X_2$. Analogously, $\widehat{P}(cV_1)=c\widehat{P}(V_1)$, for any $c\in \R$. That is, the map $\widehat{P}$ is linear. 
+	Furthermore, if $\widehat{P}(V)=0$ for certain $V\in T_{\gamma(u_1)}M$, the associated Fermi-Walker vector field to $V$ is identically null from uniqueness. Hence, $V=X(u_1)=0$, and we get that $\widehat{P}$ is one-to-one. Therefore, $\widehat{P}$ is a linear isomorphism. Finally, for the previous vector fields $X_1,X_2$, making use of Proposition \ref{propiedades de FM}(3), we get
+	\[
+	\frac{d}{du} g(X_1,X_2)=g\Big(\frac{\widehat{D}X_1}{du}, X_2\Big) + g\Big(X_1,\frac{\widehat{D}X_2}{du}\Big)=0.
+	\]
+	Therefore, $g(X_1,X_2)$ is a constant. Thus,
+	\[
+	g(\widehat{P}(V_1),\widehat{P}(V_1))=g(X_1(u_2),X_2(u_2))=g(X_1(u_1),X_2(u_1))=g(V_1,V_2),
+	\]
+	i.e., $\widehat{P}$ is a linear isometry.
+	Now, $(1)$ and $(2)$ are easy to obtain from the fact that $\gamma{\,'}$ is Fermi-Walker parallel, Proposition \ref{propiedades de FM} and $\widehat{P}$ is a linear isometry.  
+\end{proof}
+
+\begin{defi}\label{frame field}
+	Let $(M,g,\tau)$ be a spacetime and let $\gamma:I\to M$ be an observer. Consider $u_1,u_2\in I$, $u_1<u_2$ and $V_1\in R_{u_1}$, $V_2\in R_{u_2}$ such that $|V_1|=|V_2|$. It is said that $V_1$ and $V_2$ have the same spatial direction for $\gamma$ when $\widehat{P}_{u_1,u_2}^\gamma(V_1)=V_2$. 
+\end{defi}	
+
+Let $(V_1,V_2,V_3)$ be an orthonormal basis of $R_{u_1}$ and let $X_1,X_2,X_3\in \x(\gamma)$ be the Fermi-Walker parallel vector fields such that $X_i(u_1)=V_i,\forall i=1,2,3$. At every proper time $u\in I$ we have an orthonormal basis $\big(X_1(u),X_2(u),X_3(u)\big)$ of $R_u$ that is called the frame field (along $\gamma$) induced by $(V_1,V_2,V_3)$. This frame field may be interpreted as defining three axis travelling together with the observer in the spacetime and that don't rotate for $\gamma$, i.e., as a gyroscope private of $\gamma$ (see \cite[Chapter 3]{SRG}). One could think about this as a generalization of the Frenet apparatus in a general spacetime.
+
+
+\begin{rem}
+	{\rm
+		{\bf (1)} An observable vector field $X\in \x(\gamma)$ satisfies $X=f_1 X_1+f_2 X_2+f_3 X_3$, with $f_i\in \F(I)$, $i=1,2,3$. Thus, $X$ is Fermi-Walker parallel if and only if the component functions are constant.
+		{\bf (2)} Let $V_1\in R_{u_1}$, with coordinates $(a_1,a_2,a_3)$ with respect to the frame field at $u_1$, and let $V_2\in R_{u_2}$ with coordinates $(b_1,b_2,b_3)$, such that $|V_1|=|V_2|$. Then, they have the same spatial direction if and only if $a_i=b_i, \forall i=1,2,3$.
+	}
+\end{rem}
+
+The Fermi-Walker parallel transport will be useful for the geometric characterizations of the different motions studied in this work. Basically, we will see that it is an equivalent formulation of the Frenet trihedron in Lorentzian manifolds (see subsection \ref{geometric characterization UAM}).
+
+\section{UAM in General Relativity}\label{UAM in General Relativity}
+The first aim of this section is to define and study the definition of Uniformly Accelerated Motion (UAM) in general spacetimes. Later, we will geometrically characterize UAM as a so-called Lorentzian circle. For the development that follows we mostly use \cite{UAM}.
+
+\begin{defi}
+	An observer $\gamma:I\to M$ in a spacetime $(M,g,\tau)$ obeys a UAM if 
+	\begin{equation}
+		\frac{\widehat{D}}{du}\left( \frac{D\gamma{\,'}}{du} \right)=0,
+	\end{equation}
+	i.e., when its acceleration vector field is Fermi-Walker parallel along $\gamma$. It is not difficult to see that
+	$\gamma$ obeys a UAM if and only if 
+	\begin{equation}\label{MUA}
+		\dfrac{D^2\gamma{\,'}}{du^2}=g\left( \dfrac{D\gamma{\,'}}{du},\dfrac{D\gamma{\,'}}{du}\right)\gamma{\,'}
+	\end{equation}
+	if and only if  
+	\begin{equation}
+		\widehat{P}_{u_1,u_2}^\gamma\left(\dfrac{D\gamma{\,'}}{du}(u_1)\right)=\dfrac{D\gamma{\,'}}{du}(u_2),\forall u_1,u_2\in I, u_1<u_2.
+	\end{equation}
+\end{defi}
+
+Here we deal with UAM and other motions from a geometrical point of view. Y. Friedman and T. Scarr studied UAM (calling it hyperbolic motion) in $\L^4$ \cite{Friedman1}, and they proved that it is not Lorentz covariant. To obtain a covariant description of accelerated motions, they define, extending \cite{UAM}, the equation for uniform acceleration in a general curved spacetime from linear acceleration to the full Lorentz covariant uniform acceleration (see \cite{Friedman2}).
+
+\begin{ex}
+	{\rm
+		Now, we can obtain the unique observer obeying a UAM in the Lorentz-Minkowski plane $\L^2$ (naturally seen as a Lorentz plane in $\L^4$) for certain initial conditions. Recall that $\L^2$ is a flat space. From equation (\ref{MUA}), if $\gamma(u)=\big(x(u), t(u)\big)$ satisfies
+		\[
+		\gamma'''=a^2\gamma^{\, '}, \text{ with } a^2=g(\gamma'',\gamma'')\in \R^+, 
+		\]
+		\[
+		\gamma(0)=(0,0), 
+		\]
+		\[
+		\gamma{\,'}(0)=(0,1), 
+		\]
+		\[
+		\gamma''(0)=(a,0), 
+		\]
+		then
+		\[
+		\gamma(u)=\left(\frac{1}{a}\, \big[\cosh(au) - 1\big], \frac{1}{a}\, \sinh(au)\right).
+		\]
+		Therefore, the components of $\gamma$ satisfy
+		\[
+		\left(x(u)+\frac{1}{a}\right)^2-t(u)^2=\frac{1}{a^2},
+		\]
+		i.e., the observer describes a Lorentzian circle, with $p=\Big(-\dfrac{1}{a}\,,\,0\Big)$ and $r=\dfrac{1}{a}$.
+		\vspace{2mm}
+		\\	
+		Furthermore, if $\gamma$ is constructed from a Newtonian particle $x(t)$, then  
+		\[
+		t\longmapsto x(t)=\frac{1}{a} [\sqrt{a+a^2 t^2} - 1] \approx \frac{1}{2} at^2
+		\]
+		when $|at| \ll 1$, in accordance to what we know in Classical Mechanics. More examples of UAM in Lorentz-Minkowski spacetime can be found in \cite[Section 4.2]{Gron}}
+\end{ex}
+
+The next result will be useful to prove some of the properties of UAM.
+\begin{lem}\label{lema curv 1}
+	Let $(M,g,\tau)$ be a spacetime and let $\sigma:I\to M$ be a curve satisfying the differential equation
+	\begin{equation}\label{lema curv}
+		\frac{D^2\sigma'}{du^2}=\left|\frac{D\sigma'}{du}\right|^2\sigma'- g\left(\sigma',\frac{D\sigma'}{du}\right) \frac{D\sigma'}{du}.
+	\end{equation}
+	Then $\left|\dfrac{D\sigma'}{du}\right|$ is constant.
+\end{lem}
+\begin{proof}
+	We have only to multiply both members of (\ref{lema curv}) by $\dfrac{D\sigma'}{du}$, to get
+	\[
+	\frac{1}{2} \frac{d}{dt}g\left(\frac{D\sigma'}{du},\frac{D\sigma'}{du}\right)= g\left(\frac{D^2\sigma'}{du^2},\frac{D\sigma'}{du}\right)=0.
+	\]
+\end{proof}
+
+\begin{pro}\label{ac const}
+	Let $(M,g,\tau)$ be a spacetime. The following properties are satisfied
+	\begin{enumerate}
+		\item[(1)] If $\gamma:I\to M$ is a freely falling observer, then $\gamma$ obeys a UAM (the converse is false).
+		\item[(2)]\label{ac const unicity} Given $p\in M,v\in \tau(p)$, with $g(v,v)=-1$, and $w\in T_pM$ such that $g(v,w)=0$, then there exists a unique observer $\gamma : I\to M$ obeying a UAM such that $\gamma(0)=p,\gamma{\,'}(0)=v$, and $\dfrac{D\gamma{\,'}}{du}(0)=w$.
+		\item[(3)] (Conservation law) If $\gamma : I\to M$ is an observer obeying a UAM, then $g\left(\dfrac{D\gamma{\,'}}{du},\dfrac{D\gamma{\,'}}{du}\right)=a^2\ge 0$, with $a\ge 0$ constant.
+	\end{enumerate}
+\end{pro}
+\begin{proof}
+	$(1)$ is clear from $\dfrac{D\gamma{\,'}}{du}=0$.
+	For $(2)$ it suffices to take a coordinate system $(U,x_1,x_2,x_3,x_4)$ and write differential equation (\ref{MUA}) in terms of the coordinates of $\gamma$. Then, we have a system of linear differential equations whose initial conditions give a unique solution.
+	Finally, $(3)$ is clear from Lemma \ref{lema curv 1}.
+\end{proof}
+
+\begin{ex}
+	{\rm 
+	{\bf (a)} Consider a Generalized Robertson-Walker spacetime, where we have 
+	\[
+	g = f(t)^2 \sum_{ij} \bar{g}_{ij} dx_i \otimes dx_j - dt \otimes dt . 
+	\]
+	Then, any integral curve of the coordinate vector field $Q= \dfrac{\partial}{\partial t}$ obeys a UAM trivially. Indeed, if $\gamma$ is such an integral curve, we have $\gamma{\,'}(u)=Q_{\gamma(u)}=\dfrac{\partial}{\partial t} |_{\gamma(u)}$ at every proper time $u$. Thus $\dfrac{D \gamma{\, '}}{du}=0$ and $\gamma$ obeys a UAM (particularly is freely falling).  \\
+	{\bf (b)}\cite[Example 2.4(b)]{UAM} One of the simplest cases of Lorentzian manifolds are the static standard spacetimes. A spacetime is said static when it is time-independent and irrotational (see \cite[Section 7.2]{SW}). It is also named standard when $M=S\times I$, with $I$ an open interval, endowed with a metric
+	\[
+	g = g_S - f^2 dt \otimes dt,
+	\]
+	where $g_S$ is a Riemannian metric in $S$ and $f\in \F(S)$, $f>0$. Taking $Q=\dfrac{1}{h} \dfrac{\partial}{\partial t}$, then an integral curve $\gamma$ reads
+	\[
+	\frac{D\gamma{\, '}}{du}=\frac{\nabla f}{f} \circ \gamma.
+	\]
+	Now, using \cite[Proposition 7.35]{SRG}, we get
+	\[
+	\frac{D^2\gamma{\,'}}{du^2} = \frac{|\nabla f|^2}{f^2}\gamma{\,'},
+	\]
+	which implies that $\gamma$ obeys a UAM.
+}
+\end{ex}
+
+\subsection{Geometric characterization of UAM}\label{geometric characterization UAM}
+In this subsection we follow \cite{KGR} and \cite{CSMS}.
+Let $(M,g,\tau)$ be a spacetime, with $M$ (topologically) orientable, and let $\gamma:I\to M$ be a timelike curve in $M$ such that $g(\gamma{\,'}, \gamma{\,'})=-1$. As in \cite{CSMS}, we complete the velocity of $\gamma$ at $u$ to an orthonormal basis in $T_{\gamma(u)}M$, for every $u\in I$. Namely, $e_1:=\gamma{\,'}$ the unitary tangent vector field. Suppose that $\dfrac{D\gamma{\,'}}{du}$ is non-vanishing and take $e_2:=\left|\dfrac{D\gamma{\,'}}{du}\right|^{-1}\dfrac{D\gamma{\,'}}{du}$, i.e., orthogonal to $e_1$ and normalized. Finally, we take unitary spatial vector fields $e_3$ and $e_4$, with $e_3$ collinear to $\dfrac{De_2}{du}$ and orthogonal to the plane defined by $\{e_1,e_2\}$, and $e_4$ such that $(e_1(u),e_2(u), e_3(u), e_4(u))$ is a positive oriented orthonormal basis of $T_{\gamma(u)}M$, for every $u\in I$. Clearly $e_2$, $e_3$, $e_4$ are spacelike vector fields. 
+
+We call $k_j(u)$ the j-th curvature of $\gamma$, with $j=1,2,3$, in our case defined by
+\[
+k_1:=g\left(\frac{De_1}{du},e_2\right)
+\]
+\[
+k_2:=g\left(\frac{De_2}{du},e_3\right)
+\]
+\[
+k_3:=g\left(\frac{De_3}{du},e_4\right)
+\]
+
+\begin{rem}
+	{\rm
+		If $k_3\equiv 0$ then we have the Frenet formulae of $\gamma$ (see \cite{OCS}),
+		\begin{align*}
+			e_1 &=\gamma{\,'} \\
+			\frac{De_1}{du} &=k_1 e_2 \\
+			\frac{De_2}{du} &=k_1 e_1+k_2 e_3 \\
+			\frac{De_3}{du} &=-k_2 e_2
+		\end{align*}
+	}
+\end{rem}
+
+\begin{defi}[Lorentzian circle]
+	Let $(M,g,\tau)$ be a spacetime and $\gamma:I\to M$ a timelike curve in $M$ with $k_3\equiv 0$. In the terminology of \cite{KGR}, $\gamma$ is said a (Lorentzian) circle if $k_2\equiv 0$ and $k_1$ is a positive constant. If both $k_1$ and $k_2$ are positive constants, $\gamma$ is called a helix . 
+\end{defi}
+
+Now, we can characterize the observers obeying a UAM from a geometrical point of view. In the next result, the equivalent definition of UAM as \ref{MUA} will be crucial.
+\begin{pro}\label{geometric characterization}
+	Let $(M,g,\tau)$ be a spacetime and let $\gamma:I\to M$ be an observer. Then, the following statements are equivalent
+	\begin{enumerate}
+		\item[(1)]\label{characterization 1} $\gamma$ obeys a UAM,
+		\item[(2)]\label{characterization 2} Either $\gamma$ is freely falling or it is a Lorentzian circle.
+	\end{enumerate}
+\end{pro}
+\begin{proof}
+	Suppose that $\gamma$ satisfies (1) and it is not freely falling. Then, if $a=\left|\dfrac{D\gamma{\,'}}{du}\right|$ (positive constant from Proposition \ref{ac const}(3)), we have
+	\[
+	\dfrac{De_1}{du}=\dfrac{D\gamma{\,'}}{du}=ae_2,
+	\]
+	\[	
+	\dfrac{De_2}{du}=\dfrac{D}{du}\left( \dfrac{1}{a}\dfrac{D\gamma{\,'}}{du}\right)=\dfrac{1}{a}\dfrac{D^2\gamma{\,'}}{du^2}=a\gamma{\,'}=ae_1,
+	\]
+	making use of (\ref{MUA}). Thus, $\gamma$ is a Lorentzian circle with curvature $a$.
+	
+	Conversely, suppose now that $\gamma$ is a Lorentzian circle. Then
+	\begin{align*}
+		e_1 &=\gamma{\,'} \\
+		\dfrac{De_1}{du}&=k_1 e_2 \\
+		\dfrac{De_2}{du}&=k_1 e_1
+	\end{align*}
+	Hence we have 
+	\begin{equation}\label{LC}
+		e_2=\dfrac{1}{k_1}\dfrac{De_1}{du}=\dfrac{1}{k_1}\dfrac{D\gamma{\,'}}{du}\,.
+	\end{equation}
+	Since $e_2$ is normalized by definition, it follows $k_1=\left|\dfrac{D\gamma{\,'}}{du}\right|$. From (\ref{LC}) we get
+	\[
+	\dfrac{D^2\gamma{\,'}}{du^2}=k_1^2 \gamma{\,'}=g\left(\dfrac{D\gamma{\,'}}{du},\dfrac{D\gamma{\,'}}{du}\right) \gamma{\,'},
+	\]
+	which is just (\ref{MUA}), and that concludes the proof. 
+\end{proof}
+
+\begin{ex}\cite[Section 3]{SolutionsUAM}
+	{\rm
+	Consider Schwarzschild spacetime
+	\[
+	g=\Big(1-\frac{r_s}{r}\Big)^{-1} dr\otimes dr + r^2 d\Omega^2 - \Big(1-\frac{r_s}{r}\Big) dt\otimes dt,
+	\]
+	where $d\Omega^2 = d\theta \otimes d\theta + sin^2 \theta \, d\varphi \otimes d\varphi$ is the solid angle element and $r_s$ is the Schwarzschild radius. Let $\gamma$ be an observer obeying a UAM such that $\theta=\frac{\pi}{2}$ and $\varphi=0$. Then, using the Frenet equations we have just obtained and the corresponding Christoffel symbols, it can be computed
+	\[
+	\Big(\frac{dr}{dt}\Big)^2 = \frac{r (k r + C)^2 + r_s -r}{r},
+	\] 
+	the first-order nonlinear differential equation that the radial component of $\gamma$ satisfy, where $k$ is its curvature and $C$ is an integration constant.
+}
+\end{ex}
+
+\section{Completeness of the inextensible trajectories}
+This section is devoted to finding reasonable assumptions in order that the inextensible solutions of equation (\ref{MUA}) are defined on all $\R$. We will make use of the techniques developed in \cite{UAM}, as a generalization of section \ref{section 1.6}. We point out that the result is quite different from the previous one, since this will imply the timelike completeness of the spacetime. Although we are mainly interested in four dimensional spacetimes, we will face the problem for $n(\geq 2)$-dimensional spacetimes.  
+
+\begin{defi}
+	Let $(E,g)$ be a Lorentzian vector space with $\text{dim}E=n(\ge 2)$, and let $a\in \R^+$. The $(n,2)$-Stiefel manifold over $E$ is the set
+	\[
+	V_{n,2}^a(E):= \big\{(v,w)\in E\times E \, : \, |v|^2=-1,\; |w|^2=a^2,\; g(v,w)=0\big\}.
+	\]
+	Let $(M,g,\tau)$ be a spacetime with $\text{dim}M=n(\ge 2)$. The $(n,2)$-Stiefel bundle over M is
+	\[
+	V_{n,2}^a(M):=\bigcup_{p\in M} \left(\{p\}\times V_{n,2}^a(T_pM)\right).
+	\]
+\end{defi}
+The $(n,2)$-Stiefel bundle over $M$ has a natural structure of smooth manifold of dimension $3(n-1)$. Moreover, its fiber is the sphere of dimension $n-1$ and radius $a$, and therefore is compact.
+
+\vspace{2mm}
+
+The first step of the study we are carrying out is to construct a certain vector field $G\in \mathfrak{X}\big(V_{n,2}^a(M)\big)$, key tool to deal with completeness later. 
+
+
+\begin{lem}\label{lema curv 2}
+	Let $(M,g,\tau)$ be a spacetime, $p\in M$, $v\in \T(T_{p}M)$ and $w\in v^\perp$.
+	Let $\sigma:I\to M$ be a curve satisfying equation (\ref{lema curv}) with initial conditions 
+	\[
+	\sigma(0)=p, \quad \sigma'(0)=v, \quad \dfrac{D\sigma'}{du}(0)=w.
+	\]
+	Then $g(\sigma',\sigma')=-1$, and therefore $g\Big(\sigma',\dfrac{D\sigma'}{du}\Big)=0$ hold on all $I$.
+\end{lem}
+\begin{proof}
+	Multiplying (\ref{lema curv}) by $\sigma'$ and putting $x(u):=|\sigma'(u)|^2$, we get
+	\[
+	\dfrac{1}{2} x'' +\dfrac{1}{4} (x')^2 - \left|\dfrac{D\sigma'}{du}\right|^2 x = g\Big(\dfrac{D^2\sigma'}{du^2},\sigma'\Big)+\left|\dfrac{D\sigma'}{du}\right|^2+g\Big(\dfrac{D\sigma'}{du},\sigma'\Big)^2-\left|\dfrac{D\sigma'}{du}\right|^2|\sigma'|^2 = \left|\dfrac{D\sigma'}{du}\right|^2.	
+	\]
+	Thus, it turns out
+	\[
+	\dfrac{1}{2} x'' +\dfrac{1}{4} (x')^2 -a^2 x= a^2,
+	\]
+	where $a:=\left|\dfrac{D\sigma'}{du}\right|$ is constant (see Lemma \ref{lema curv 1}).
+	From initial assumptions, we have $x(0)=-1$ and $x'(0)=0$. Since $x(u)=-1$ is a solution of this initial value problem, the result is a consequence of the uniqueness of solutions of second order differential
+	equations.
+\end{proof}
+From Lemma \ref{lema curv 1} and Lemma \ref{lema curv 2} we have $\Big(\sigma(u),\sigma'(u),\dfrac{D\sigma'}{du}(u)\Big)\in V_{n,2}^a(M)$. Now, we are in a position to define the announced vector field $G$.
+\begin{defi}
+	Let $(M,g,\tau)$ be a spacetime and $(p,v,w)\in V_{n,2}^a(M)$. Let $\sigma:I\to M$ be the unique inextensible curve in $M$ satisfying equation (\ref{lema curv}) with initial conditions
+	\[
+	\sigma(0)=p, \quad \sigma'(0)=v, \quad \dfrac{D\sigma'}{du}(0)=w.
+	\]
+	We define a vector field $G\in \x(V_{n,2}^a(M))$ as
+	\[
+	G_{p,v,w}(f):=\dfrac{d}{du}\Big|_{u=0}\,f\Big(\sigma(u),\sigma'(u),\dfrac{D\sigma'}{du}(u)\Big),
+	\]
+	for every $f\in \F(V_{n,2}^a(M))$.
+\end{defi}
+Note that $G$ is then well defined as a derivation (the equivalence between derivations and vector fields can be seen in \cite{SRG}). Next lemma is a direct consequence of the definition and will provide us a tool to work with the extension of uniformly accelerated observers.
+
+\begin{lem}\label{campo G}
+	Let $\gamma:I\to M$ be the solution of (\ref{MUA}) with initial conditions $\gamma(0)=p\in M$, $\gamma{\,'}(0)=v\in T_pM$, $\dfrac{D\gamma{\,'}}{du}(0)=w\in T_pM$, such that $g(v,v)=-1$, $v\in \tau(p)$, $g(w,w)=a^2$ and $a>0$. Then, the vector field $G$ on $V_{n,2}^a$ is characterized as the unique vector field on $V_{n,2}^a(M)$ such that $u\longmapsto \Big(\gamma(u), \gamma{\,'}(u), \dfrac{D\gamma{\,'}(u)}{du}\Big)$ are their integral curves.
+\end{lem}
+
+Lemma \ref{curv ext} and the previous result imply the following
+\begin{lem}
+	Let $\gamma:[0,b[ \to M$ be the unique solution of equation (\ref{MUA}), with $0<b<\infty$.
+	Then $\gamma$ can be extended to $b$ as a solution of (\ref{MUA}) if and only if there exists $\{t_n\}\nearrow b$ such that $\{\big(\gamma(t_n),\gamma{\,'}(t_n),\dfrac{D\gamma{\,'}}{du}(t_n)\big)\}_n$ is convergent in $V_{n,2}^a(M)$.
+\end{lem}
+
+The following result provides us conditions to ensure that the curve in $V_{n,2}^a$ associated to a UAM has its image contained in a compact subset.
+\begin{lem}\label{lem curv 3}
+	Let $(M,g,\tau)$ be a spacetime, $C\subset M$ a compact subset and let $Q\in \x(M)$ be a unitary and timelike vector field.	If $\gamma:I\to M$ is a solution of {\rm (\ref{MUA})} such that $\gamma(I)\subset C$ and the function $u\in I \to g(Q(\gamma (u)),\gamma{\,'}(u))\in \R$ is bounded, then the image of $u\in I\longmapsto \left( \gamma(u), \gamma{\,'}(u), \dfrac{D\gamma{\,'}(u)}{du} \right)\in V_{n,2}^a(M)$, where $a=\left|\dfrac{D\gamma{\,'}}{du}\right|$ constant, is contained in a compact subset of $V_{n,2}^a(M)$. 
+\end{lem}
+\begin{proof}
+	Let $Q^b$ be the 1-form metric equivalent to $Q$ and let $g_R:=g+2Q^b \otimes Q^b$ be the associated Riemannian metric. Now, consider
+	\[
+	g_R(\gamma{\,'},\gamma{\,'})=g(\gamma{\,'},\gamma{\,'})+ 2g(Q,\gamma{\,'})^2.
+	\]
+	which is bounded on $I$ by assumption. Therefore, there exists a constant $c>0$ such that
+	\[
+	\left( \gamma(I), \gamma{\,'}(I), \dfrac{D\gamma{\,'}(I)}{du} \right) \subset \tilde{C},
+	\]
+	where $\tilde{C}:=\{(p,v,w)\in V_{n,2}^a(M) \, : \, p\in C , \, g_R(v,v)\le c\}$. Since the fiber of $V_{n,2}^a (M)$ is compact, then $\tilde{C}$ is a compact subset, and that concludes the proof.
+\end{proof}
+
+We will find conditions to ensure completeness based on the existence of a certain vector field. The next definition will give us the necessary property that we need.
+
+\begin{defi}
+	Let $(M,g,\tau)$ be a spacetime and let $\nabla$ be the Levi-Civita connection of $g$.
+	A vector field $K$ is conformal and closed if there exists $\lambda\in \F(M)$ such that
+	\begin{equation}\label{conf and cerr}
+		\nabla_X K=2\lambda X ,\hspace{2mm} \forall X\in\x(M).
+	\end{equation}
+\end{defi}
+
+\begin{rem}\label{remark conf and closed}
+	{\rm Note that a conformal and closed vector field $K$ satisfies equation (\ref{def conformal}) and the 1-form $K^b$ metrically equivalent also verifies
+	\[
+	dK^b(X,Y) = g(\nabla_X K, Y) - g(\nabla_Y K, X) =0,
+	\]
+	i.e., $K$ is a conformal and closed vector field by the usual definitions.
+	
+	Moreover, for every curve $\gamma:I\to M$ and every conformal and closed $K\in\x(M)$, equation (\ref{conf and cerr}) implies $\dfrac{D(K\circ \gamma)}{du}=(\lambda\circ \gamma) \gamma{\,'}$ and hence
+	\begin{equation}\label{CC}
+		\dfrac{d}{du}g(K\circ \gamma,\gamma{\,'})=g\Big(K\circ \gamma,\dfrac{D\gamma{\,'}}{du}\Big)+ (\lambda\circ \gamma)g(\gamma{\,'},\gamma{\,'}).
+	\end{equation}
+}
+\end{rem}
+
+\vspace{5mm}
+Finally, in the following result we give a sufficient condition that implies completeness for an inextensible UAM.
+\begin{theor}\label{completitud}
+	Let $(M,g,\tau)$ be a spacetime which admits a conformal, closed and timelike vector field $K$. If $\inf_M\sqrt{-g(K,K)}>0$ then, every solution $\gamma:I\to M$ (with $I$ bounded) of equation {\rm (\ref{MUA})} such that $\gamma(I)$ is contained in a compact subset of $M$, can be extended.
+\end{theor}
+
+\begin{proof}
+	Let $I=[0,b[$ be the domain of a solution $\gamma$ of equation {\rm (\ref{MUA})}. 
+	If we derive $(\ref{CC})$, we obtain
+	\begin{equation}\label{CC2}
+	\dfrac{d^2}{du^2}g\left(K\circ \gamma,\gamma{\,'}\right)=g\left(\dfrac{DK\circ \gamma}{du},\dfrac{D\gamma{\,'}}{du}\right)+g\left(K\circ \gamma,\dfrac{D^2\gamma{\,'}}{du^2}\right)-\dfrac{d}{du}(\lambda\circ \gamma).
+	\end{equation}
+	Since $K$ is conformal and closed, the first right term becomes
+	\[
+	g\Big(\dfrac{DK\circ \gamma}{du},\dfrac{D\gamma{\,'}}{du}\Big)=(\lambda\circ \gamma)g\left(\gamma{\,'},\dfrac{D\gamma{\,'}}{du}\right)=0.
+	\]
+	Hence, since $\gamma$ is a solution of (\ref{MUA}), the function $u\longmapsto x(u):=g(K_{\gamma(u)}, \gamma{\,'}(u))$ satisfies, thanks of (\ref{CC2}), the following equation
+	\begin{equation}\label{dem}
+		\dfrac{d^2}{du^2}x-a^2 x=-\frac{d}{du}(\lambda\circ \gamma),
+	\end{equation}
+	where $a=\left|\dfrac{D\gamma{\,'}}{du}\right|$ is constant from Lemma \ref{lema curv}. 
+	
+	On the other hand, since $\gamma(I)$ is contained in a compact subset of $M$ and $h$ is defined on all $M$, the function $h\circ \gamma$ and its derivatives are bounded on $I$. Moreover, as $I$ is bounded, equation {\rm (\ref{dem})} implies that there exists a constant $d>0$ such that $|g(K\circ \gamma,\gamma{\,'})|<d$. 
+	Now, if we put $Q:=\dfrac{K}{\sqrt{-g(K,K)}}$ and $m=\sup_M\left(\sqrt{-g(K,K)}\right)^{-1}$, $Q$ is a unitary timelike vector field such that $|g(Q(\gamma(u)),\gamma{\,'})|\le md$ on $I$. Therefore, from Lemma \ref{lem curv 3} the image of $u\longmapsto \left( \gamma(u), \gamma{\,'}(u), \dfrac{D\gamma{\,'}(u)}{du} \right)$ is contained in a compact subset of $V_{n,2}^a(M)$, and from Lemma \ref{curv ext} the curve $\gamma$ can be extended as a solution of (\ref{MUA}).
+\end{proof}
+
+\begin{rem}
+{\rm  Note that Theorem \ref{completitud} gives the following result of mathematical interest: Let $(M,g,\tau)$ be a compact spacetime which admits a timelike conformal and closed vector field $K$. Then, each inextensible solution of {\rm (\ref{MUA})} must be complete. Although one could deduce of this fact the non-singularity of spacetime \cite{SgG}, compact spacetimes do not model realistic spacetimes because they have closed timelike curves (i.e., ``time travel machines''), but these are sometimes the first step of evaluating new tools to be used late on physically relevant spacetimes. }
+\end{rem}
+
+\section{Other relevant motions in General Relativity}\label{Other motions}
+\subsection{Unchanged Direction Motion}
+In this subsection, we extend to General Relativity the notion of an observer which does not change direction in its motion. Following the approach in \cite{UDM}, an observer obeys an Unchanged Direction Motion (UDM) if its acceleration points the same direction at every proper time.
+\begin{defi}\label{UDM_def}
+	Let $(M,g,\tau)$ be a spacetime. An observer $\gamma:I\to M$ obeys a UDM if it is satisfied (see \cite{UDM})
+	\begin{equation}
+		\widehat{P}_{u_1,u_2}^\gamma \left(\dfrac{D\gamma{\,'}}{du}(u_1)\right) = \lambda(u_1,u_2) \dfrac{D\gamma{\,'}}{du}(u_2),
+	\end{equation}
+	for certain $\lambda:I\times I\to \R$ and for every $u_1,u_2\in I$ with $u_1<u_2$.
+\end{defi}
+
+Clearly, if $\gamma$ obeys a UAM then it also obeys a UDM, with $\lambda=1$. Moreover, if and only if the acceleration does not vanish everywhere, then $\gamma$ obeys a UDM if the normalized acceleration, $\left|\dfrac{D\gamma{\,'}}{du}\right|^{-1}\dfrac{D\gamma{\,'}}{du}$, is Fermi-Walker parallel along $\gamma$. 
+
+\begin{defi}\label{piece-wise}
+	Let $(M,g,\tau)$ be a spacetime and let $\gamma:I\to M$ be an observer. 
+	$\gamma$ obeys a piece-wise UDM if it is satisfied
+	\begin{equation}\label{UDM}
+		\left|\dfrac{D\gamma{\,'}}{du}\right|^2\dfrac{D^2\gamma{\,'}}{du^2}=\dfrac{1}{2}\dfrac{d}{du}\left|\dfrac{D\gamma{\,'}}{du}\right|^2\dfrac{D\gamma{\,'}}{du}+\left|\dfrac{D\gamma{\,'}}{du}\right|^4\gamma{\,'}.
+	\end{equation}
+\end{defi}
+
+\begin{rem}
+	{\rm
+		Note that if $\gamma$ obeys a UDM then it obeys a piece-wise UDM. Indeed, let $a=\left|\dfrac{D\gamma{\,'}}{du}\right|$. Firstly, $\dfrac{d}{du}\dfrac{1}{a}=-\dfrac{1}{2a^3}\dfrac{d}{du}(a^2)$, and then
+		\begin{align*}
+		0=\dfrac{\widehat{D}}{du}\left[ \dfrac{1}{a}\dfrac{D\gamma{\,'}}{du}\right] & =\dfrac{D}{du}\left[\dfrac{1}{a}\dfrac{D\gamma{\,'}}{du}\right]  + g\Big(\gamma{\,'},\dfrac{1}{a}\dfrac{D\gamma{\,'}}{du}\Big)\dfrac{D\gamma{\,'}}{du}-g\Big(\dfrac{D\gamma{\,'}}{du},\dfrac{1}{a}\dfrac{D\gamma{\,'}}{du}\Big)\gamma{\,'} \\[2mm] 
+		& =\dfrac{1}{a}\dfrac{D^2\gamma{\,'}}{du^2}-\dfrac{1}{2a^3}\dfrac{d}{du}\left|\dfrac{D\gamma{\,'}}{du}\right|^2\dfrac{D\gamma{\,'}}{du}-a\gamma{\,'}.
+		\end{align*}
+		Multiplying by $a^3$ and reorganizing, we get {\rm (\ref{UDM})}. 
+		
+		Conversely, a solution of equation {\rm (\ref{UDM})} does not describe a UDM in general. If $\gamma$ is a solution of {\rm (\ref{UDM})} and $\dfrac{D\gamma{\,'}}{du}\ne 0$ on all $I$, then $\gamma$ obeys a UDM. However, in the case $\gamma$ satisfies {\rm (\ref{UDM})} and its acceleration vanishes on a proper subinterval $J\subset I$, $\gamma$ is freely falling while on $J$, until it would be accelerated on $I\setminus J$. }
+\end{rem}
+
+The following result is a geometric characterization of Definition \ref{piece-wise} (compare with Proposition \ref{geometric characterization}),
+\begin{pro}
+	Let $(M,g,\tau)$ be a spacetime and let $\gamma:I\to M$ be an observer. Then, the following properties are equivalent
+	\begin{enumerate}
+		\item[(1)] $\gamma$ obeys a piece-wise UDM,
+		\item[(2)] The curvatures of $\gamma$ vanish, except (occasionally) the first one.
+	\end{enumerate}
+\end{pro}
+\begin{proof}
+	If $\gamma$ obeys a UDM with $\left|\dfrac{D\gamma{\,'}}{du}\right|>0$ on all $I$, then we can define
+	\[
+	e_1(u):=\gamma{\,'}(u), \quad e_2(u):=\left|\dfrac{D\gamma{\,'}}{du}\right|^{-1}\dfrac{D\gamma{\,'}}{du}(u).
+	\]
+	From equation (\ref{UDM}), it is easy to compute
+	\[
+	\frac{D}{du}e_2=\dfrac{1}{\left|\frac{D\gamma{\,'}}{du}\right|}\dfrac{D^2\gamma{\,'}}{du^2}-\dfrac{1}{2\left|\frac{D\gamma{\,'}}{du}\right|^3}\dfrac{d}{du}\Big(\left|\dfrac{D\gamma{\,'}}{du}\right|^2\Big) \dfrac{D\gamma{\,'}}{du}=\left|\dfrac{D\gamma{\,'}}{du}\right| \gamma{\, '}.
+	\]
+	Thus, we have
+	\[
+	\dfrac{De_1}{du}=\left|\dfrac{D\gamma{\,'}}{du}\right|e_2\,,
+	\]
+	\[
+	\dfrac{De_2}{du}=\left|\dfrac{D\gamma{\,'}}{du}\right|e_1\,.
+	\]
+	Conversely, if $\gamma$ satisfies both previous equations, then $\gamma$ is trivially a solution of equation (\ref{UDM}).
+\end{proof}
+
+Note that in previous Frenet formulas, the first curvature of $\gamma$, $\left|\dfrac{D\gamma{\,'}}{du}\right|$, may be a non-constant function of the proper time. Moreover, if it is a constant, we obtain a Lorentzian circle as we know from Proposition \ref{geometric characterization}.
+
+\begin{rem}
+	{\rm
+		We point out (see \cite{UDM}) the uniqueness of solutions of {\rm (\ref{UDM})} is not guaranteed if the acceleration vanishes somewhere. However, if $a=\left|\dfrac{D\gamma{\,'}}{du}\right|>0$ holds on all $I$ then we can write the ordinary differential equation associated to UDM in normal form 
+		\begin{equation}\label{UDM not zero}
+			\frac{D^2 \gamma\,'}{du^2} - \frac{a'}{a} \frac{D\gamma\,'}{du} - a^2 \gamma\,'=0,
+		\end{equation}
+		and clearly it has a unique local solution. If we take 2 different functions $a$ with the same initial value, then both solutions of (\ref{UDM not zero}) are also solutions of (\ref{UDM}), and we see why there is not uniqueness in the second case.
+}
+\end{rem}
+
+Finally, if the acceleration of a UDM does not vanish, we can state an analogous completeness result to Theorem \ref{completitud}.
+
+\begin{theor}
+	Let $(M,g,\tau)$ be a spacetime which admits a conformal, closed and timelike vector field $K$. If $\inf_M\sqrt{-g(K,K)}>0$ and the acceleration vector field satisfies $\left|\dfrac{D\gamma\,'}{du}\right|>0$ on all $I$, then every solution $\gamma:I\to M$ (with $I$ bounded) of equation {\rm (\ref{UDM})} such that $\gamma(I)$ lies in a compact subset of $M$ can be extended.
+\end{theor}
+
+The proof of the theorem is very similar to the one corresponding to UAM, except for the differential equation that the function $u\longmapsto g(K_{\gamma(u)}, \gamma{\,'}(u))$ satisfies. The rest works as we want.
+
+\subsection{Uniform Circular Motion}
+We end this chapter introducing Uniform Circular Motion in general spacetimes. It should be pointed out that UCM has been previously described in specific non-flat spacetimes. For instance, using the Schwarzschild metric, P. Geisler showed a particular solution of Einstein equations for the Solar system in \cite{Geisler}, just obtaining a particular UCM in Schwarzschild spacetime. We will follow \cite{UCM} for our approach. First of all we need the following notion
+\begin{defi}[Plane motion]\label{plane motion}
+	Let $(M,g,\tau)$ be a spacetime. An observer $\gamma:I\to M$ obeys a plane motion if, for certain $u_0\in I$, there exists an observable plane $\Pi_{u_0}\subset R_{u_0}$ such that 
+	\begin{equation}
+		\widehat{P}_{u,u_0}^\gamma\left(\dfrac{D\gamma{\,'}}{du}(u)\right) \in \Pi_{u_0},
+	\end{equation}
+for all $u\in I$.
+\end{defi}
+
+\begin{rem}
+	{\rm
+		As a consequence of the definition of Fermi-Walker parallel transport, we have
+		\[
+		\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)(u_0)=\lim_{\epsilon \to 0}\dfrac{1}{\epsilon}\left[\widehat{P}_{u_0+\epsilon,u_0}^\gamma\left( \dfrac{D\gamma{\,'}}{du}(u_0+\epsilon)\right) - \dfrac{D\gamma{\,'}}{du}(u_0)\right].
+		\]
+		Hence, if an observer $\gamma$ obeys a plane motion, then  $\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)(u_0)\in \Pi_{u_0}$. Indeed, if $\gamma$ has not an unchanged direction in a neighbourhood of $u_0$ (in the terminology of \cite{UDM}), then
+		\[
+		\Pi_{u_0}=\textrm{Span}\Big( \Big\lbrace  \dfrac{D\gamma{\,'}}{du}(u_0), \dfrac{\widehat{D}}{du}\dfrac{D\gamma{\,'}}{du}(u_0)\Big\rbrace \Big).
+		\] }
+\end{rem}
+
+Now, once we have introduced the notion of plane motion, we can define properly a UCM.
+\begin{defi}[Uniform Circular Motion]\label{UCM definition} An observer $\gamma:I\to M$ in a spacetime $(M,g,\tau)$ obeys
+	 a UCM if it obeys a plane motion and satisfies
+	\begin{equation}\label{UCM}
+		\left|\dfrac{D\gamma{\,'}}{du}\right|^2=a^2,\quad \quad \left| \dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)\right|^2=a^2 w^2,
+	\end{equation}
+	where $a,w\in \R$ such that $0<a<w$.
+\end{defi}
+
+The constant $a$ is the module of the acceleration, and $w$ could be interpreted as the angular velocity that $\gamma$ observes. Hence, we have the classical relation $a=w^2 R$, with $R$ the radius of the (classical) circular motion. Remark that $R$ does not represent an observable distance in general.
+On the other hand, the assumption $w>a$ is due to the exclusion of other types of motions which does not seem to be circular motion (see \cite{UCM}). In fact, if we allow $a=0$ we would include the freely falling case, and if $w=0$ then we would have a UAM.  
+
+\vspace{2mm}
+Now we can give a particular example of a UCM in flat space $\L^3$.
+\begin{ex}\label{example UCM}
+	{\rm 
+		If $\gamma:I\to \L^3$ is an observer obeying a UCM with initial conditions
+		\[
+		\gamma(0)=\Big(\frac{a}{w^2-a^2},0,0\Big),\quad \gamma{\,'}(0)=\Big(0, \frac{a}{\sqrt{w^2-a^2}}, \frac{w}{\sqrt{w^2-a^2}} \Big),
+		\]
+		\[
+		\gamma''(0)=(-a,0,0), \quad \frac{\widehat{D}\gamma''}{du}(0)=\Big(0, \frac{aw^2}{\sqrt{w^2-a^2}},\frac{a^2 w}{\sqrt{w^2-a^2}}\Big),
+		\]
+		then
+		\begin{equation}
+			\gamma(u)=\left( \frac{a}{w^2-a^2}\cos\big(\sqrt{w^2-a^2}\,u\big),\frac{a}{w^2-a^2}\sin\big(\sqrt{w^2-a^2}\,u\big), \frac{wu}{\sqrt{w^2-a^2}}  \right).
+		\end{equation}
+		
+		To prove that, consider three orthogonal vectors $v_1$, $v_2$, $v_3$ such that $|v_1|^2=-1$ and $|v_2|^2=|v_3|^2=1$, and take
+		\[
+		L:=\frac{1}{k}\,(wv_1+av_3), \quad M:=\frac{-1}{k}\,(av_1+wv_3), \quad N:=v_2.
+		\]
+		Then, we define 
+		\[
+		Z(u):=\frac{w}{k}\,L+ \frac{a}{k}\,\big[\cos(ku)\,M+\sin(ku)\,N\big],
+		\]
+		with $k=\sqrt{w^2-a^2}$.
+		Clearly $|Z|^2=-1$ and $Z'=a(-\sin(ku)\,M+\cos(ku)\,N)$.
+		Using the orthogonality of $M$ and $N$, we get $|Z'|^2=a^2$. Analogously, we obtain
+		\[
+		\frac{\widehat{D}Z'}{du}=\frac{-a^2w}{k}\,L-\frac{aw^2}{k}\,(\cos(ku)\,M+\sin(ku)\,N),
+		\]
+		and then $\left|\dfrac{\widehat{D}Z''}{du}\right|^2=a^2w^2$. Besides, $Z$ satisfies the initial conditions
+		\[
+		Z(0)=v_1,\quad Z'(0)=av_2, \quad \frac{\widehat{D}Z''}{du}(0)=awv_3.
+		\]
+		Then, the uniqueness of the initial value problem leads to $\gamma{\,'}=Z$.
+	}
+\end{ex}
+
+Given $(M,g,\tau)$ an oriented spacetime, a frame field on $\gamma$ at every proper time $u\in I$ can be constructed as follows, 
+\[
+e_1:=\gamma{\,'}, \quad e_2:=\dfrac{1}{a}\dfrac{D\gamma{\,'}}{du}, \quad e_3:=\dfrac{1}{aw}\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right), 
+\]
+and (see \cite{UCM}):
+\[
+e_4=\dfrac{1}{a^2w}\dfrac{D\gamma{\,'}}{du}\times \dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right),
+\]
+where the vector product in the $3$-dimensional vector space $R_u$ is defined considering the orientation in $R_u$ obtained from the inner contraction by $\gamma{\,'}(u)$ of the metric volume element $\Omega$ of $M$.
+\begin{pro}
+	Let $(M,g,\tau)$ be a spacetime and let $\gamma:I\to M$ be an observer. Then, the next properties are equivalent
+	\begin{enumerate}
+		\item[(1)] $\gamma$ obeys a UCM,
+		\item[(2)]$\gamma$ is a helix with curvature $a$ and torsion $w$ such that $w>a$.
+	\end{enumerate}
+\end{pro}
+\begin{proof}
+If (1) holds, then we can obtain the Frenet equations for $\gamma$. First of all,
+\[
+\dfrac{De_1}{du}=ae_2, \quad \dfrac{De_2}{du}=\dfrac{1}{a}\left[ \dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)+a^2\gamma{\,'}\right]=ae_1+we_3.
+\]
+On the other hand, since $\gamma$ obeys a UCM and then $\dfrac{D\gamma{\,'}}{du} \perp \dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)$, it follows
+\[
+g\left(\dfrac{De_3}{du},e_1\right)=\dfrac{1}{aw}g\left( \dfrac{D}{du}\left( \dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)\right),\gamma{\,'} \right)= \dfrac{1}{aw} \dfrac{d}{du}g\left(\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right), \gamma{\,'}\right) =0,
+\]
+using $g\left(\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right), \gamma{\,'}\right)=-g\left(\dfrac{\widehat{D}\gamma{\,'}}{du}, \dfrac{D\gamma{\,'}}{du}\right)=-g\left(\dfrac{D\gamma{\,'}}{du}, \dfrac{D\gamma{\,'}}{du}\right)=-a^2$.
+Moreover,
+\begin{align*}
+g\left(\dfrac{De_3}{du},e_2\right) & =\dfrac{1}{a^2w} \left[\dfrac{d}{du}g\left( \dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right),\dfrac{D\gamma{\,'}}{du} \right)-\left|\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)\right|^2 \right] \\[2mm] 
+& = -\dfrac{1}{a^2w} \left|\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)\right|^2=-w.
+\end{align*}
+Hence, we have
+\[
+\dfrac{De_3}{du}=-we_2.
+\]
+Finally, for $e_4$ we have
+\[
+\dfrac{De_4}{du}=\dfrac{\widehat{D}e_4}{du}-g(e_4,\gamma{\,'})\dfrac{D\gamma{\,'}}{du}+g\left(e_4,\dfrac{D\gamma{\,'}}{du}\right)\gamma{\,'}=0,
+\]
+because it is Fermi-Walker parallel. 
+
+
+Conversely, Suppose now $\gamma$ is a helix with curvature $a$ and torsion $w$ such that $w>a$. From $\dfrac{De_2}{du}=ae_1+we_3$, it follows
+\[
+\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)=\dfrac{D^2\gamma{\,'}}{du^2}-a^2\gamma{\,'}.
+\]
+From equation {\rm (\ref{der cov FM})} we get
+\[
+g\left(\dfrac{D\gamma{\,'}}{du},\gamma{\,'}\right)\dfrac{D\gamma{\,'}}{du}-\left|\dfrac{D\gamma{\,'}}{du}\right|^2\gamma{\,'}=-a^2\gamma{\,'}.
+\]
+Since $\gamma$ is an observer, this implies directly
+\[
+\left|\dfrac{D\gamma{\,'}}{du}\right|^2=a^2.
+\]
+Now, from $\dfrac{De_3}{du}=-we_2$ we have
+\[
+\dfrac{1}{aw}\dfrac{D}{du}\left(\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)\right)=-\dfrac{w}{a}\dfrac{D\gamma{\,'}}{du} \implies \dfrac{D}{du}\left(\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)\right)=-w^2\dfrac{D\gamma{\,'}}{du},
+\]
+and it follows
+\[
+\dfrac{d}{du}g\left(\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right),\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)\right)=-2w^2g\left(\dfrac{D\gamma{\,'}}{du},\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)\right)=0.
+\]
+Therefore, $\left|\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)\right|$ is constant, and using that $e_3$ is normalized,
+\[
+\left|\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right)\right|=aw
+\]
+\end{proof}
+
+Now, given an observer $\gamma$, we note that the differential equations which characterize a UCM can be stated as follows,
+\begin{equation}\label{UCM Frenet 1}
+	\dfrac{\widehat{D}}{du}\left(\dfrac{D\gamma{\,'}}{du}\right) = \frac{D^2 \gamma\,'}{du^2} - a^2 \gamma\,',
+\end{equation}
+\begin{equation}\label{UCM Frenet 2}
+	\frac{D}{du}\Big[ \frac{D^2 \gamma\,'}{du^2} + (w^2 - a^2) \gamma\,' \Big]=0.
+\end{equation}
+
+\begin{rem}
+	{\rm We would like to point out (see \cite{UCM}) the associated Cauchy problem to equations {\rm (\ref{UCM Frenet 1}) and (\ref{UCM Frenet 2})} have clearly a unique solution. 
+	}
+\end{rem}
+
+\begin{theor}
+	Let $(M,g,\tau)$ be a spacetime which admits a conformal, closed and timelike vector field $K$. If $\inf_M\sqrt{-g(K,K)}>0$ then, every solution $\gamma:I\to M$ (with $I$ bounded) of equation {\rm (\ref{UCM Frenet 2})} such that $\gamma(I)$ is contained in a compact subset of $M$, can be extended.
+\end{theor}
+The proof is based on the construction of a new vector field $G$ in the $(n,3)-$Stiefel bundle over the spacetime $M$ whose integral curves are UCM. The result is obtained by means of a representation of the uniform circular observers and the boundedness of the function $u\longmapsto g(K_{\gamma(u)}, \gamma{\,'}(u))$ (see \cite{UCM}).
+
+\chapter*{Conclusion}
+%\thispagestyle{empty}
+\addcontentsline{toc}{chapter}{Conclusion} 
+\markboth{CONCLUSION}{CONCLUSION}
+Throughout this work we have studied three distinguished motions in General Relativity following \cite{UAM}, \cite{UDM} and \cite{UCM}: Uniformly Accelerated Motion (UAM), Unchanged Direction Motion (UDM) and Uniform Circular Motion (UCM), all three well known in Classical Mechanics. In the second half of the last century, UAM was considered in Lorentz-Minkowski spacetime $\L^4$ under the name of hyperbolic motion. Of course, the very special tools of affine geometry to deal with $\L^4$ cannot be directly extended to general spacetimes. Here, making use of techniques from modern Lorentzian Geometry, we have described and studied these motions on arbitrary spacetimes. 
+
+The necessary tools of (differential) Lorentzian Geometry have been explained in Chapter \ref{Chapter2}. In particular, we have stated in detail the notion of time orientation of a Lorentzian manifold and we have discussed when a Lorentzian manifold is time orientable. Indeed, the notion of time oriented Lorentzian manifold is essential to arrive to the definition of spacetime. Moreover, to finish this chapter we have introduced the techniques developed in \cite{RS} that prove the (geodesic) completeness of a compact Lorentzian manifold under certain conditions. These motivate the proof of completeness of the different motions, as we see in the next chapter.
+
+The main goal of this work is contained in Chapter \ref{Chapter3}. After introducing the Fermi-Walker covariant derivative of an observer and, consequently, the associated Fermi-Walker parallel transport, the notion of an observer that obeys a UAM, i.e., an observer that perceives its 4-acceleration constant, has been analysed in a general spacetime. Then, such an observer has been geometrically characterized as a Lorentzian circle. After seeing that each trajectory of a uniformly accelerated observer can be contemplated as the projection on the spacetime of an integral curve of certain vector field defined on a specific fiber bundle over the spacetime, we have found assumptions to ensure that an inextensible UAM observer does not disappear in a finite proper time, i.e., a result that gives the absence of singularities for observers obeying a UAM. Chapter \ref{Chapter3} ends with the study of UDM and UCM in an arbitrary spacetime. It should be remarked that each of the three motions has been also analysed from the point of view of the ordinary differential equation that the corresponding motion defines.         
+
+It should be pointed out that the study of these motions in General Relativity has been carried out thanks to accurate techniques of Lorentzian Geometry, especially to the Fermi-Walker connection along each observer, a powerful private tool of each observer that provides it with a moving gyroscope in its relative space at each instant of its proper time. Several possible research lines related with these motions are now open. For instance, the usual singularity theorems ensure the existence of a freely falling observer whose proper time is either bounded from above or from below \cite{SW2}. It could be relevant to decide if, under reasonable assumptions, singularity results remain true for observers obeying a UAM, for instance.      
+
+
+%\newpage
+%$\ $
+\thispagestyle{empty}
+
+\begin{thebibliography}{999}
+\addcontentsline{toc}{chapter}{Bibliography} 
+%\markboth{BIBLIOGRAPHY}{BIBLIOGRAPHY}
+	
+\bibitem{DM} W.M. Boothby, {\it An Introduction to differentiable manifolds and Riemannian Geometry}, Academic Press, New York 2003.
+	
+\bibitem{KGR} D. De la Fuente, {\it Some problems on prescribed mean curvature and kinematics in general relativity}, Tesis Doctoral de la Universidad de Granada, 2016, ISBN: 9788491259374.
+	
+\bibitem{UAM} D. de la Fuente, A. Romero, {\rm Uniformly accelerated motion in General Relativity: completeness of inextensible trajectories}, {\it General Relativity and Gravitation}, {\bf 47} (2015), 33.
+	
+\bibitem{UDM} D. de la Fuente, A. Romero and P.J. Torres, {\rm Unchanged direction motion in general relativity: the problem of prescribing acceleration}, {\it J. Math. Phys.}, {\bf 56} (2015) 112501.
+	
+\bibitem{UCM} D. de la Fuente, A. Romero and P.J. Torres, {\rm Uniform circular motion in general relativity: existence and extendibility of the trajectories}, {\it Class. Quantum Grav.}, {\bf 34} (2017) 125016.
+
+\bibitem{thomas precession} G.P. Fisher, Thomas Precession, \textit{Amer. J. Phys.}, \textbf{40}, 1772-1781 (1972).
+
+\bibitem{Friedman1} Y. Friedman, T. Scarr, {\rm Making the relativistic dynamics equation covariant: explicit solutions for motion under a constant force}, {\it Phys. Scr.}, {\bf 86} (2012), 065008.
+
+\bibitem{Friedman2} Y. Friedman, T. Scarr, Uniform acceleration in general relativity, {\it Gen. Relativ. Gravit.}, {\bf 47} (2015), 121(1-19).
+
+\bibitem{Geisler} P.A. Geisler, {\rm Planetary orbits in general relativity}, {\it Astron. J.}, {\bf 68} (1963), 715–717.
+	
+\bibitem{SgG} R. Geroch, {\rm What is a Singularity in General Relativity?}, {\it Ann. Phys.}, {\bf 48} (1968) 526-540.
+	
+\bibitem{Gron} \O. Gr\o n, {\it Lectures notes on the General Theory of Relativity}, Springer, New York, 2009.
+	
+\bibitem{OCS} T. Ikawa, {\rm On curves and submanifolds in an indefinite-Riemannian manifold}, {\it Tsukuba. J. Math.}, {\bf 9} (1985), 353--371.
+
+\bibitem{K} M. Kriele, {\it Spacetime. Foundations of General Relativity and Differential Geometry}, Lecture Notes in Physics, Monographs {\bf 59}, Springer 1999.
+	
+\bibitem{Gravitation} W. Misner, S. Thorne and A. Wheeler, {\it Gravitation}, W. H. Freeman, San Francisco, 1973.
+		
+\bibitem{SRG} B. O'Neill, {\it Semi-Riemannian Geometry with Applications to Relativity}, Academic Press, New York 1983.
+
+\bibitem{MLG} F.J. Palomo, A. Romero, Certain Actual Topics on Modern Lorentzian Geometry, {\it Handbook of Differential Geometry Vol.} {\bf II}, Elsevier/North–Holland (2006), Chapter 8, 513--546.
+	
+\bibitem{LCP} W. Rindler, Hyperbolic Motion in Curved Space Time, {\it Physical Review}, {\bf 119} (1960), 2082--2089.
+	
+\bibitem{GyR} A. Romero, {\it Geometría y Relatividad. Una introducción a la geometría básica de la teoría}, II Jornadas: Lecciones de Matemáticas, Rev. S.A.E.M. Thales Epsilon, {\bf 14} (1998), 305--320.
+	
+\bibitem{GL} A. Romero, {\it Geometría de Lorentz: de lenguaje a herramienta básica in Relatividad General}, Conf. FME Curs Einstein 2004-05, F. Math. Est., UPC, {\bf 2} (2006), 123--147.
+	
+\bibitem{SEC} A. Romero, {\it An introduction to certain topics on Lorentzian geometry}, Atlantis Press 2017,  259--284.
+
+\bibitem{RS} A. Romero, M. S\'anchez, Completeness of compact Lorentz manifolds admitting
+a timelike conformal Killing vector field, {\it Proc. Amer. Math. Soc.}, {\bf 123} (1995), 
+2831--2833.
+	
+\bibitem{SW} R.K. Sachs, H. Wu, {\it General Relativity for Mathematicians}, Graduate texts in Math. {\bf 48}, Springer-Verlag, New York, Heidelberg, Berlin, 1977.
+
+\bibitem{SW2} R.K. Sachs, H. Wu, General Relativity and Cosmology, {\it Bull. Amer. Math. Soc.,} \textbf{83} (1977), 1101--1164.
+
+\bibitem{SolutionsUAM} T. Scarr, Y. Friedman, Solutions for uniform acceleration in general relativity, {\it Gen. Relativ. Gravit.}, {\bf 48} (2016), 65.
+	
+\bibitem{CSMS} J. Walrave, {\it Curves and Surfaces in Minkowski Space}, PhD. Thesis, K. U. Leuven, 1995.
+\end{thebibliography}
+
+\end{document}
